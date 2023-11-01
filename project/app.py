@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,session
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -12,8 +12,35 @@ app.config['MYSQL_DB'] = 'akun_registrasi'  # Ganti dengan nama database MySQL A
 # Inisialisasi ekstensi MySQL
 mysql = MySQL(app)
 
-# Halaman registrasi
+
+# Rute untuk halaman registrasi
 @app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Ambil data dari formulir login
+        username = request.form['username']
+        password = request.form['password']
+
+        # Periksa autentikasi pengguna (ganti dengan logika autentikasi sesuai kebutuhan)
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        user = cur.fetchone()
+        cur.close()
+
+        if user:
+            session['username'] = user[3]
+            # Autentikasi berhasil, tambahkan logika sesuai kebutuhan
+            return redirect(url_for('dashboard'))
+        else:
+            flash(f'Login gagal. Cek kembali username dan password.')
+
+
+
+    return render_template('log.html')
+
+
+# Rute untuk halaman login
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         # Ambil data dari formulir registrasi
@@ -38,6 +65,11 @@ def register():
             flash('Password tidak sesuai.')
 
     return render_template('registrasi.html')
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 
 if __name__ == '__main__':
     app.secret_key = 'your_secret_key'

@@ -2,16 +2,16 @@
 <html>
 <head>
     <title>Form Registrasi</title>
+    <link rel="stylesheet" type="text/css" href=static/css/styleregis.css>
 </head>
 <body>
     <h2>Form Registrasi</h2>
-    <form action="/register" method="post">
+    <form action="/" method="post">
         <label for="nama">Nama</label>
         <input type="text" id="nama" name="nama" required><br><br>
 
         <label for="status">Status</label>
         <input type="text" id="status" name="status" required><br><br>
-
 
         <label for="nim_nip">NIM/NIP</label>
         <input type="text" id="nim_nip" name="nim_nip" required><br><br>
@@ -26,11 +26,12 @@
         <input type="password" id="konfirmasi_password" name="konfirmasi_password" required><br><br>
 
         <input type="submit" value="Daftar"><br>
-        <input type="submit" value="Login"><br>
     </form>
 
     <!-- Tautan ke halaman login.html -->
-    <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+    <!-- Tautan ke halaman login.html -->
+    <p>Sudah punya akun? <a href="{{ url_for('login') }}">Login di sini</a></p>
+
 
     <p>{{ get_flashed_messages() }}</p>
 </body>
