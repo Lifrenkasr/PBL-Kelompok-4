@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Registrasi</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styleregis.css">
+</head>
+<body>
+    <div class="center-container">
+        <h2>Form Registrasi</h2>
+        <form action="/" method="post">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" required><br><br>
+
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="Dosen">Dosen</option>
+                <option value="Mahasiswa">Mahasiswa</option>
+            </select><br><br>
+
+            <label for="nim_nip">NIM/NIP</label>
+            <input type="text" id="nim_nip" name="nim_nip" required><br><br>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required maxlength="10"><br><br>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <label for="konfirmasi_password">Konfirmasi Password</label>
+            <input type="password" id="konfirmasi_password" name="konfirmasi_password" required><br><br>
+            
+            <input type="submit" value="Daftar" onclick="checkPasswordMatch()"><br>
+        </form>
+
+        <p id="success-message" style="display: none;">Registrasi Berhasil</p>
+        <p id="password-mismatch" style="color: red; display: none;">Password tidak sesuai</p>
+    </div>
+
+    <script>
+        function checkPasswordMatch() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("konfirmasi_password").value;
+            var successMessage = document.getElementById("success-message");
+            var passwordMismatchMessage = document.getElementById("password-mismatch");
+
+            if (password === confirmPassword) {
+                successMessage.style.display = "block";
+                passwordMismatchMessage.style.display = "none";
+            } else {
+                successMessage.style.display = "none";
+                passwordMismatchMessage.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

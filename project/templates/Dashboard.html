@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="styleregis.css">
+</head>
+</head>
+<body>
+    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+        <div class="left" style="display: flex; align-items: center;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcLo2kLxv0XvNG4UjSqVxZCCNnwgrxDr35oAyXWEA5j7FPbJj7EfRqVkSe5311SlNO5mQwZ7X-Pe8cNk53xnOwvuBPRV7jQBH8nfQsXDfvZ9N5T9VTYWKjaPWktVfQOX1guTvVDxaYCUN4UCeoq2lv6YNZkjQ2dyReDeAN0V1_4zhn1dCP4kVyU1tSpxk/s780/Logo%20Poltek%20Negeri%20Jakarta%20%5BDesaingratis.web.id%5D.png" alt="Logo" style="height: 50px; width: 50px; margin-right: 10px;">
+            <div>
+                <h2 style="margin: 0; color: white;">Smart Class Embedded Room</h2>
+                <p style="margin: 0; color: white;">Politeknik Negeri Jakarta</p>
+            </div>
+        </div>
+        <div class="right">
+            <button class="logout" onclick="window.location.href='login.html'">Logout</button>
+        </div>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-item">
+                <a href="#" style="color: #00179c;">Jadwal Ruangan</a>
+            </div>
+            <div class="sidebar-item">
+                <a href="#" style="color: #00179c;">Akses Pintu</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bar">
+                <div class="schedule">
+                    <h3 style="color: #00179c;">Jadwal Ruangan</h3>
+                    <!-- Tambahkan jadwal ruangan di sini -->
+                    <table class="table" border="1">
+                        
+                        <tr>
+                            <th>Hari</th>
+                            <th>Jam Durasi</th>
+                            <th>Kelas</th>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Senin</td>
+                            <td>07.30 - 10.50</td>
+                            <td>Kelas A</td>
+                        </tr>
+                        <tr>
+                            <td>13.00 - 15.50</td>
+                            <td>Kelas B</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Selasa</td>
+                            <td>07.30 - 10.50</td>
+                            <td>Kelas C</td>
+                        </tr>
+                        <tr>
+                            <td>13.00 - 15.50</td>
+                            <td>Kelas D</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Rabu</td>
+                            <td>07.30 - 10.50</td>
+                            <td>Kelas E</td>
+                        </tr>
+                        <tr>
+                            <td>13.00 - 15.50</td>
+                            <td>Kelas F</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Kamis</td>
+                            <td>07.30 - 10.50</td>
+                            <td>Kelas G</td>
+                        </tr>
+                        <tr>
+                            <td>13.00 - 15.50</td>
+                            <td>Kelas H</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Jumat</td>
+                            <td>07.30 - 10.50</td>
+                            <td>Kelas I</td>
+                        </tr>
+                        <tr>
+                            <td>13.00 - 15.50</td>
+                            <td>Kelas J</td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+            <!-- Tambahkan konten lain di sini -->
+        </div>
+    </div>
+    <footer style="background-color: #070708; color: white; text-align: center; padding: 10px; position: fix; bottom: 0; width: 100%;">
+        <p>&copy; 2023 Politeknik Negeri Jakarta</p>
+    </footer>
+</body>
+</html>
