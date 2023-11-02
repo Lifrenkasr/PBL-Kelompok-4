@@ -66,6 +66,7 @@ def register():
 
     return render_template('registrasi.html')
 
+#rute untuk halaman Dashboard
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')

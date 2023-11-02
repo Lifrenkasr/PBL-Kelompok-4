@@ -1,0 +1,128 @@
+/* Isi dari File CSS Ketiga (File 3.css) */
+body {
+    background-image: url('https://images.pexels.com/photos/3042508/pexels-photo-3042508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    padding: 20px;
+    text-align: left;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+}
+
+.content {
+    flex: 3;
+    padding: 20px;
+}
+
+.logout {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+}
+
+.logout:hover {
+    background-color: #ff0800;
+}
+
+.schedule {
+    width: 100%;
+    /* Perbarui gaya untuk meletakkan jadwal ruangan di tengah */
+    margin: 0 auto;
+}
+
+.table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    height: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+}
+
+.schedule {
+    flex: 2;
+}
+
+.door-access {
+    flex: 1;
+    text-align: center;
+}
+
+.sidebar-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.web-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.web-link:hover {
+    background-color: #45a049;
+}

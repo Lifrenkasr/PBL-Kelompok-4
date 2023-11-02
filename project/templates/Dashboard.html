@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="styleregis.css">
+    <link rel="stylesheet" type="text/css" href=static/css/styledashboard.css>
 </head>
 </head>
 <body>
@@ -17,7 +17,16 @@
             </div>
         </div>
         <div class="right">
-            <button class="logout" onclick="window.location.href='login.html'">Logout</button>
+                            <!-- Tautan ke halaman login menggunakan JavaScript -->
+                <button class="logout" id="logout-button">Logout</button>
+                <script>
+                document.getElementById("logout-button").onclick = function() {
+                    window.location.href = "{{ url_for('login') }}";
+                };
+                </script>
+
+
+
         </div>
     </header>
     <div class="container">
