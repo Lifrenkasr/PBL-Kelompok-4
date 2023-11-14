@@ -66,6 +66,10 @@ def register():
 
     return render_template('registrasi.html')
 
+@app.route('/delete_user')
+def delete():
+    pass
+
 #rute untuk halaman Dashboard
 @app.route('/dashboard')
 def dashboard():
