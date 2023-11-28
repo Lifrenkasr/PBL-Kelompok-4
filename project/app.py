@@ -102,3 +102,5 @@ if __name__ == '__main__':
     registration_instance = Registration(app)
     dashboard_instance = Dashboard(app)
     app.run(debug=True)
+    
+    #test
