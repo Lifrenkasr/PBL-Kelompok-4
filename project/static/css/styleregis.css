@@ -1,114 +1,140 @@
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+/* styleregis.css */
 
-body, html {
-    height: 100%;
-    background: #1c1e21;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling for body and container */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+.left-side {
+            /* Existing styles */
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-image: url();
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .video-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          object-fit: cover;
+      }        
+
+        /* Tambahkan gaya pada judul "WELCOME TO SMART LOCK DOOR" */
+.left-side h2 {
+  font-size: 3em; /* Ukuran font yang besar */
+  color: #c4c1c1; /* Warna teks */
+  text-align: center; /* Pusatkan teks */
+  margin-top: 50px; /* Jarak atas dari elemen di atasnya */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Bayangan teks */
 }
 
 
+        .left-side p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
 
+        /* Media query for responsiveness */
+        @media screen and (max-width: 768px) {
+            .left-side {
+                width: 100%;
+            }
+        }
 
-.btn {
-    border-radius: 0;
+.right-side {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url();
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.btn:focus,
-.btn:active,
-.btn.active,
-.btn:active:focus {
-    outline: 0;
-    border-radius: 0;
+.signup-box {
+  width: 60%;
+  max-width: 400px; /* Set a maximum width for the form */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(195, 194, 194, 0.1);
+  background: transparent;
+  background-color: rgba(175, 174, 174, 0.9); /* Ubah nilai alpha untuk transparansi */
+  text-align: center;
+  animation: fadeIn 1s ease-in-out; /* Animasi fadeIn */
 }
 
-.btn-larger {
-    padding: 15px 40px !important;
-    border: 2px solid #F7CA18 !important;
-    border-radius: 0 !important;
-    text-transform: uppercase;
-    font-family: 'Dosis', sans-serif;
-    font-size: 18px;
-    font-weight: 300;
-    color: #F7CA18;
-    background-color: transparent;
-    transition: all .6s;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Pilihan: Ubah posisi awal saat animasi dimulai */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Pilihan: Ubah posisi akhir saat animasi selesai */
+  }
 }
 
-.btn-larger:hover,
-.btn-larger:focus,
-.btn-larger:active,
-.btn-larger.active,
-.open .dropdown-toggle.btn-larger {
-    border-color: #F7CA18;
-    color: #fff;
-    background-color: #F7CA18;
-    border-radius: 0;
+
+.form-group {
+  margin-bottom: 20px;
 }
 
-.btn-larger:active,
-.btn-larger.active,
-.open .dropdown-toggle.btn-larger {
-    background-image: none;
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
 }
 
-.btn-larger.disabled,
-.btn-larger[disabled],
-fieldset[disabled] .btn-larger,
-.btn-larger.disabled:hover,
-.btn-larger[disabled]:hover,
-fieldset[disabled] .btn-larger:hover,
-.btn-larger.disabled:focus,
-.btn-larger[disabled]:focus,
-fieldset[disabled] .btn-larger:focus,
-.btn-larger.disabled:active,
-.btn-larger[disabled]:active,
-fieldset[disabled] .btn-larger:active,
-.btn-larger.disabled.active,
-.btn-larger[disabled].active,
-fieldset[disabled] .btn-larger.active {
-    border-color: #AEA8D3;
-    background-color: #AEA8D3;
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-.btn-larger .badge {
-    color: #AEA8D3;
-    background-color: #fff;
+.btn--form {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-div#form {
-    color: #fff;
-    background-attachment: scroll;
-    background: #8b8f94 url(https://static.pexels.com/photos/8819/warsaw.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh; /* Diganti dari 100% menjadi 100vh */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.btn--form:hover {
+  background-color: #0056b3;
 }
 
-#userform p {
-    font-size: 14px;
-    margin-bottom: 5px;
+.signup__link {
+  color: #007bff;
+  text-decoration: none;
 }
-
-#userform ul {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 0;
-}
-
-#userform {
-    background: rgba(0, 0, 0, 0.8);
-    margin: 20px 0 20px 0;
-}
-
-@media (min-width: 768px) {
-    #userform {
-        background: rgba(0, 0, 0, 0.8);
-    }
-}
-    
