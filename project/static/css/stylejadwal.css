@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    background-image: url(https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+header {
+    padding: 20px;
+    text-align: left;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+}
+
+footer {
+  background-color: #070708;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.8;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    background-color: #f8f7f7;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #0a0a0a;
+    color: #1a1919;
+}
+
+th {
+    background-color: #050505;
+    color: #f5f2f2;
+}
