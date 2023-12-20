@@ -80,14 +80,22 @@ body {
 
 .signup-box {
   width: 60%;
-  max-width: 400px; /* Set a maximum width for the form */
-  padding: 30px;
+  max-width: 35s00px; /* Set a maximum width for the form */
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(195, 194, 194, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   background: transparent;
-  background-color: rgba(175, 174, 174, 0.9); /* Ubah nilai alpha untuk transparansi */
+  background-color: rgba(52, 49, 49, 0.9); /* Ubah nilai alpha untuk transparansi */
   text-align: center;
   animation: fadeIn 1s ease-in-out; /* Animasi fadeIn */
+}
+
+.signup-box h1 {
+  color: #eee;
+}
+
+.form-group label {
+  color: #eee;
 }
 
 @keyframes fadeIn {
@@ -103,20 +111,20 @@ body {
 
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 6px;
-  color: #333;
+  color: #eee;
 }
 
 .form-control {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #404040;
 }
 
 .btn--form {
@@ -124,7 +132,7 @@ body {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #5274a0;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
