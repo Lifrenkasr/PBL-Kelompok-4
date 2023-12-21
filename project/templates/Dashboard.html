@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styledashboard.css') }}">
+    <link rel="stylesheet" type="text/css" href="static/css/styledashboard.css">
+
+    <script>
+        function redirectToEditProfile() {
+            window.location.href = "{{ url_for('edit_profile') }}";
+        }
+    </script>
+    <script>
+        document.getElementById("logout-button").onclick = function() {
+            window.location.href = "{{ url_for('login') }}";
+        };
+    </script>
+    
 </head>
-</head>
+
 <body>
     <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
         <div class="left" style="display: flex; align-items: center;">
@@ -16,23 +28,22 @@
                 <p style="margin: 0; color: white;">Politeknik Negeri Jakarta</p>
             </div>
         </div>
-        <div class="right">
-                            <!-- Tautan ke halaman login menggunakan JavaScript -->
-                <button class="logout" id="logout-button">Logout</button>
-                <script>
-                document.getElementById("logout-button").onclick = function() {
-                    window.location.href = "{{ url_for('login') }}";
-                };
-                </script>
-
-
-
+        <div class="right" style="display: flex; align-items: center;">
+            <!-- Tampilkan informasi profil -->
+            <a href="{{ url_for('login') }}" style=" color: white;">Log Out |</a>
+            
+            <div style="display: flex; align-items: center; margin-right: 10px;">
+                <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -5px;"
+                    onclick="redirectToEditProfile()">
+                <p style="color: #fff;">{{ session['nama'] }}</p>
+            </div>
         </div>
     </header>
+    
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-item">  
-                <a href="/jadwal_ruangan" style="color: #00179c;">Jadwal Ruangan</a>
+                <a href="{{ url_for('jadwal') }}" style="color: #00179c;">Jadwal Ruangan</a>
             </div>
             <div class="sidebar-item">
                 <a href="http://192.168.134.127" style="color: #00179c;">Akses Pintu</a>
@@ -45,7 +56,7 @@
             <div class="content">
                 <div class="bar">
                     <div class="History">
-                        <h3 style="color: #000000;">Riwayat Login</h3>
+                        <h3 style="color: #00179c;">Riwayat Login</h3>
         </div>
     </div>
     <footer>

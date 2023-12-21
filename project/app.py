@@ -1,29 +1,29 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
-
-from flask_migrate import Migrate
+from flask_mysqldb import MySQL
+from datetime import datetime
+from flask import send_from_directory
+from werkzeug.utils import secure_filename
+import base64
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= 'mysql://root:@localhost/akun_registrasi'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
-app.config['SECRET_KEY'] = 'KUCINGDALAMSELIMUT'
 
-db = SQLAlchemy(app)
+# Konfigurasi MySQL
+app.config['MYSQL_HOST'] = 'localhost'  # Ganti sesuai host MySQL Anda
+app.config['MYSQL_USER'] = 'root'  # Ganti dengan username MySQL Anda
+app.config['MYSQL_PASSWORD'] = ''  # Ganti dengan password MySQL Anda
+app.config['MYSQL_DB'] = 'akun_registrasi'  # Ganti dengan nama database MySQL Anda
 
-class Users(db.Model):
-   
-    nama = db.Column(db.String(30), nullable=False)
-    status = db.Column(db.String(30), nullable=False)
-    nim_nip = db.Column(db.Integer, nullable=False)
-    username = db.Column(db.String(30), unique=True, nullable=False, primary_key=True)
-    password = db.Column(db.String(30), nullable=False)
+# Inisialisasi ekstensi MySQL
+mysql = MySQL(app)
 
+UPLOAD_FOLDER = 'static/profile_pictures'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+# Rute untuk halamam login
 @app.route('/', methods=['GET', 'POST'])
-def home():
-    return render_template('home.html')
-
-# Rute untuk halaman login
-@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         if 'register' in request.form:  # Jika tombol register diklik
@@ -31,25 +31,24 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        # Periksa autentikasi Users (ganti dengan logika autentikasi sesuai kebutuhan)
-        user = Users.query.filter_by(username=username).first()
+        print(username, password)
+        # Periksa autentikasi pengguna (ganti dengan logika autentikasi sesuai kebutuhan)
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        user = cur.fetchone()
+        cur.close()
 
-        if user is None:
-            flash("Login Gagal User Tidak Ditemukan", 'danger')
-        elif password != Users.password:
-            flash("Password Salah!", 'danger')
-        else:
-            session['username'] = True
+        print(user)
+        if user:
+            session['username'] = user[3]
+            # Autentikasi berhasil, tambahkan logika sesuai kebutuhan
             return redirect(url_for('dashboard'))
-        # if user is None:
-        #     session['username'] = True
-        #     # Autentikasi berhasil, arahkan ke halaman dashboard setelah login
-        #     return redirect(url_for('dashboard'))  # Ubah ke rute dashboard di sini
-        # else:
-        #     flash(f'Login gagal. Cek kembali username dan password.')
-        #     print(f'Login gagal. Cek kembali username dan password.')
-    return render_template('log.html')
+        else:
+            flash(f'Login gagal. Cek kembali username dan password.')
+            print(f'Login gagal. Cek kembali username dan password.')
 
+
+    return render_template('log.html')
 
 # Rute untuk halaman registrasi
 @app.route('/register', methods=['GET', 'POST'])
@@ -63,45 +62,124 @@ def register():
         username = request.form['username']
         password = request.form['password']
         konfirmasi_password = request.form['konfirmasi_password']
-
-        user = Users.query.filter_by(username=username).first()
-
-        if user:
-            flash("User already exist", 'danger')
-        elif password != konfirmasi_password:
-            flash("Password didn't match", 'danger')
-        else:
-            new_user = Users(nama=nama, status=status, nim_nip=nim_nip, username=username, password=password)
-            db.session.add(new_user)
-            db.session.commit() 
-            flash("Sign-Up Success!, you can log in now", 'success')
-            return redirect(url_for('login'))
+        profile_picture = request.form['profile_picture']
 
         # Periksa apakah password sesuai
-        # if password == konfirmasi_password:
-        #     # Koneksi ke MySQL
-        #     cur = mysql.connection.cursor()
-        #     cur.execute("INSERT INTO users (nama, status, nim_nip, username, password) VALUES (%s, %s, %s, %s, %s)",
-        #                 (nama, status, nim_nip, username, password))
-        #     mysql.connection.commit()
-        #     cur.close()
-        #     flash('Registrasi berhasil. Silakan login.')
-        #     return redirect(url_for('login'))
-        # else:
-        #     flash('Password tidak sesuai.')
+        if password == konfirmasi_password:
+            # Koneksi ke MySQL
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO users (nama, status, nim_nip, username, password, profile_picture) VALUES (%s, %s, %s, %s, %s)",
+                        (nama, status, nim_nip, username, password, profile_picture))
+            mysql.connection.commit()
+            cur.close()
+            flash('Registrasi berhasil. Silakan login.')
+            return redirect(url_for('login'))
+        else:
+            flash('Password tidak sesuai.')
+
     return render_template('registrasi.html')
 
-# Rute untuk halaman Dashboard
+#rute untuk halaman Dashboard
 @app.route('/dashboard')
 def dashboard():
-    return render_template('Dashboard.html')
+    if 'username' in session:
+        # Koneksi ke database
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
+        user_data = cur.fetchone()
+        cur.close()
 
-# Rute untuk halaman jadwal ruangan
-@app.route('/jadwal_ruangan')
-def jadwal_ruangan():
-    return render_template('jadwal.html')
+        profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+
+
+        return render_template('Dashboard.html', profile_picture=profile_picture)
+    else:
+        return redirect(url_for('login'))
+    
+@app.route('/jadwal')
+def jadwal():
+    if 'username' in session:
+        # Koneksi ke database
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
+        user_data = cur.fetchone()
+        cur.close()
+
+        profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+
+
+        return render_template('jadwal.html', profile_picture=profile_picture)
+    else:
+        return redirect(url_for('login'))
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
+
+@app.route('/profile_picture/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    # Ambil data pengguna dari database dan teruskan ke templat
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
+    user_data = cur.fetchone()
+    cur.close()
+
+    if request.method == 'POST':
+        # Ambil data dari formulir edit profil
+        nama = request.form['nama']
+        status = request.form['status']
+        username = request.form['username']
+        password = request.form['password']
+        # profile_picture = request.form['profile_picture']
+        
+        # Check if file was uploaded and is valid
+        if 'profile_picture' in request.files:
+            file = request.files['profile_picture']
+            if file.filename == '':
+                flash('No selected file')
+            elif file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                # Update the filename in the database
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE users SET nama = %s, status = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
+                            (nama, status, password, filename, datetime.now(), username))
+                mysql.connection.commit()
+                cur.close()
+                flash('Profil berhasil diubah.')
+                return redirect(url_for('dashboard'))
+            else:
+                flash('File gambar tidak valid. Gunakan format: png, jpg, jpeg, atau gif.')
+
+
+        # # Koneksi ke database
+        # cur = mysql.connection.cursor()
+        # cur.execute("UPDATE users SET nama = %s, status = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
+        #             (nama, status, password, profile_picture, datetime.now(), username))
+        # mysql.connection.commit()
+        # cur.close()
+        # flash('Profil berhasil diubah.')
+        # return redirect(url_for('dashboard'))
+
+    return render_template('edit_profile.html', user_data=user_data)
+
+# Rute untuk logout
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all() 
-    app.run(debug=True)
+    app.secret_key = 'your_secret_key'
+    app.run(debug=True, host="127.0.0.1", port=5000)

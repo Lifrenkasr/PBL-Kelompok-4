@@ -2,7 +2,7 @@
 
 /* Isi dari File CSS Ketiga (File 3.css) */
 body {
-    background-image: url('https://infopublik.id/assets/upload/headline//politeknik_jakarta.jpg');
+    background-image: url(https://images.hdqwalls.com/wallpapers/mac-os-9-finder-yw.jpg);
     font-family: 'Poppins', sans-serif;
     margin: 0;
 }
@@ -14,7 +14,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 footer {
@@ -26,7 +25,6 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    
 }
 
 .container {
