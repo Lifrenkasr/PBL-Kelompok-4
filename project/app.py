@@ -50,6 +50,7 @@ def login():
 
     return render_template('log.html')
 
+
 # Rute untuk halaman registrasi
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -68,8 +69,8 @@ def register():
         if password == konfirmasi_password:
             # Koneksi ke MySQL
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO users (nama, status, nim_nip, username, password, profile_picture) VALUES (%s, %s, %s, %s, %s)",
-                        (nama, status, nim_nip, username, password, profile_picture))
+            cur.execute("INSERT INTO users (nama, status, nim_nip, username, password, profile_picture) VALUES (%s, %s, %s, %s, %s, %s)",
+            (nama, status, nim_nip, username, password, profile_picture))
             mysql.connection.commit()
             cur.close()
             flash('Registrasi berhasil. Silakan login.')
@@ -135,42 +136,33 @@ def edit_profile():
         # Ambil data dari formulir edit profil
         nama = request.form['nama']
         status = request.form['status']
+        nim_nip = request.form['nim_nip']
         username = request.form['username']
         password = request.form['password']
-        # profile_picture = request.form['profile_picture']
         
-        # Check if file was uploaded and is valid
+        # Unggah gambar profil
+        filename = user_data[6]  # Mengasumsikan jalur gambar profil berada pada kolom ke-5
         if 'profile_picture' in request.files:
             file = request.files['profile_picture']
-            if file.filename == '':
-                flash('No selected file')
-            elif file and allowed_file(file.filename):
+            if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                if not os.path.exists(UPLOAD_FOLDER):
-                    os.makedirs(UPLOAD_FOLDER)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                # Update the filename in the database
-                cur = mysql.connection.cursor()
-                cur.execute("UPDATE users SET nama = %s, status = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
-                            (nama, status, password, filename, datetime.now(), username))
-                mysql.connection.commit()
-                cur.close()
-                flash('Profil berhasil diubah.')
-                return redirect(url_for('dashboard'))
             else:
                 flash('File gambar tidak valid. Gunakan format: png, jpg, jpeg, atau gif.')
 
-
-        # # Koneksi ke database
-        # cur = mysql.connection.cursor()
-        # cur.execute("UPDATE users SET nama = %s, status = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
-        #             (nama, status, password, profile_picture, datetime.now(), username))
-        # mysql.connection.commit()
-        # cur.close()
-        # flash('Profil berhasil diubah.')
-        # return redirect(url_for('dashboard'))
+        # Koneksi ke database
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE users SET nama = %s, status = %s, nim_nip = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
+                    (nama, status, nim_nip, password, filename, datetime.now(), username))
+        mysql.connection.commit()
+        cur.close()
+        flash('Profil berhasil diubah.')
+        return redirect(url_for('dashboard'))
 
     return render_template('edit_profile.html', user_data=user_data)
+
+
+
 
 # Rute untuk logout
 @app.route('/logout')

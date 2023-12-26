@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
-    background-image: url(https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=);
     font-family: 'Poppins', sans-serif;
     margin: 0;
+    overflow-y: auto; /* Menambahkan properti overflow untuk bisa di-scroll */
 }
 
 header {
@@ -17,34 +17,37 @@ header {
 }
 
 footer {
-  background-color: #070708;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0.8;
+    background-color: #070708;
+    color: white;
+    text-align: center;
+    padding: 5px 0; /* Mengurangi tinggi padding di footer */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
 }
+
 
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75vh;
+    height: 65vh; /* Mengurangi ketinggian kontainer untuk membuat ruang pada bagian bawah */
+    margin-bottom: 30px; /* Menambahkan margin bawah untuk memberi jarak antara tabel dan footer */
 }
 
 table {
-    width: 70%;
+    width: 50%; /* Mengurangi lebar tabel menjadi 50% dari lebar viewport */
     border-collapse: collapse;
-    margin-top: 12px;
-    background-color: #f8f7f7;
+    margin-top: 15px;
+    background-color: rgba(251, 251, 251, 0.7);
 }
+
 
 th,
 td {
-    padding: 12px;
+    padding: 8px;
     text-align: left;
     border-bottom: 1px solid #0a0a0a;
     color: #1a1919;
@@ -54,3 +57,13 @@ th {
     background-color: #050505;
     color: #f5f2f2;
 }
+
+.video-bg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
