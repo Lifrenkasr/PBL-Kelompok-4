@@ -55,12 +55,33 @@
     
                 <label for="new_username">Username:</label>
                 <input type="text" name="username" required placeholder="Enter Your Username for Login" value="{{ user_data[3] }}">
+
+                <label for="old_password">Old Password:</label>
+                <input type="password" name="old_password" required placeholder="Enter Your Old Password">
+                    {% with messages = get_flashed_messages(category_filter='old_password') %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 
                 <label for="new_password">Password:</label>
                 <input type="password" name="password" required placeholder="Enter Your New Password">
         
                 <label for="new_profile_picture">Foto Profil Baru:</label>
                 <input type="file" name="profile_picture">
+                    {% with messages = get_flashed_messages(category_filter='profile_picture') %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 
                 <input type="submit" value="SAVE">
             </form>

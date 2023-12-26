@@ -59,7 +59,7 @@ th {
 /* Container untuk Profile dan Edit */
 .profile-container,
 .edit-container {
-    padding: 20px; /* Menambahkan ruang padding */
+    padding: 10px; /* Menambahkan ruang padding */
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -75,6 +75,7 @@ th {
     flex: 3; /* 75% lebar dari parent container */
     max-width: 75%;
     margin-left: 20px; /* Jarak antara container kiri dan kanan */
+    min-height: 100%;
 }
 
 /* Styles untuk elemen form */
