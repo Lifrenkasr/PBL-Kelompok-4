@@ -1,0 +1,77 @@
+/* Reset default margin and padding */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Menghindari scroll di bagian samping */
+  background-image: url("bg.jpeg");
+}
+
+
+/* Sidebar */
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left:  0px; 
+  width: 250px;
+  height: 100%;
+  background: rgba(119, 110, 110, 0.7); /* Warna latar belakang dengan transparansi */
+  transition: all 0.3s ease;
+  z-index: 1; /* Tambahkan z-index di sini */
+}
+
+
+.sidebar header {
+  font-size: 22px;
+  color: white;
+  line-height: 70px;
+  text-align: center;
+  background: #242020;
+  user-select: none;
+}
+
+.sidebar ul {
+  margin-top: 50px; /* Atur margin atas pada daftar menu */
+  padding: 0;
+}
+
+.sidebar ul li {
+  list-style: none;
+}
+
+.sidebar ul a {
+  display: block;
+  padding: 15px 25px;
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.sidebar ul a:hover {
+  background: #181616;
+}
+
+/* Checkbox Styling */
+#check {
+  display: none;
+}
+
+.btn-toggle {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  cursor: pointer;
+  z-index: 1;
+  color: white;
+  font-size: 25px;
+}
+
+/* Efek tampilan sidebar saat checkbox diklik */
+#check:checked ~ .sidebar {
+  left: 0;
+}

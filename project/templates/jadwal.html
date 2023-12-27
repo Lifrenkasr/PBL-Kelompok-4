@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profil</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylejadwal.css') }}">
-    <!-- Add other CSS files if needed -->
+
+    <script>
+        function redirectToEditProfile() {
+            window.location.href = "{{ url_for('edit_profile') }}";
+        }
+    </script>
 </head>
 
 <body>
@@ -22,8 +27,8 @@
     <div class="right">
         <!-- Tampilkan informasi profil -->
         <div style="display: flex; align-items: center; margin-right: 20px;">
-            <a href="{{ url_for('dashboard') }}" style="color: white;">Home | </a>
-            <a href="{{ url_for('logout') }}" style="color: white;">|  Log Out  || </a>
+            <a href="{{ url_for('dashboard') }}" style="color: white;"> Home  |</a>
+            <a href="{{ url_for('logout') }}" style="color: white;">|  Log Out  </a>
             
             <div style="display: flex; align-items: center; margin-right: 10px;">
               <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -25px;"
@@ -32,7 +37,10 @@
         </div>
     </div>
 </header>
-
+<video class="video-bg" autoplay muted loop>
+    <source src="/static/css/bg3.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
     <!-- Header section -->
     <h1 style="text-align: center; color: white; margin-top: 10px;">Jadwal Ruangan</h1>
 

@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="static/css/styledashboard.css">
-
-    <script>
-        function redirectToEditProfile() {
-            window.location.href = "{{ url_for('edit_profile') }}";
-        }
-    </script>
-    <script>
-        document.getElementById("logout-button").onclick = function() {
-            window.location.href = "{{ url_for('login') }}";
-        };
-    </script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="static/css/styledashboard.css">
     
-</head>
-
+        <script>
+            function redirectToEditProfile() {
+                window.location.href = "{{ url_for('edit_profile') }}";
+            }
+        </script>
+        <script>
+            document.getElementById("logout-button").onclick = function() {
+                window.location.href = "{{ url_for('login') }}";
+            };
+        </script>
+        
+    </head>
 <body>
-    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+    <video class="video-bg" autoplay muted loop>
+        <source src="/static/css/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
         <div class="left" style="display: flex; align-items: center;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcLo2kLxv0XvNG4UjSqVxZCCNnwgrxDr35oAyXWEA5j7FPbJj7EfRqVkSe5311SlNO5mQwZ7X-Pe8cNk53xnOwvuBPRV7jQBH8nfQsXDfvZ9N5T9VTYWKjaPWktVfQOX1guTvVDxaYCUN4UCeoq2lv6YNZkjQ2dyReDeAN0V1_4zhn1dCP4kVyU1tSpxk/s780/Logo%20Poltek%20Negeri%20Jakarta%20%5BDesaingratis.web.id%5D.png" alt="Logo" style="height: 50px; width: 50px; margin-right: 10px;">
             <div>
@@ -30,38 +34,55 @@
         </div>
         <div class="right" style="display: flex; align-items: center;">
             <!-- Tampilkan informasi profil -->
-            <a href="{{ url_for('login') }}" style=" color: white;">Log Out |</a>
+            <a href="{{ url_for('login') }}" class="logout-button">Log Out</a>
+
             
             <div style="display: flex; align-items: center; margin-right: 10px;">
                 <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -5px;"
                     onclick="redirectToEditProfile()">
-                <p style="color: #fff;">{{ session['nama'] }}</p>
+              
             </div>
         </div>
     </header>
-    
-    <div class="container">
-        <div class="sidebar">
-            <div class="sidebar-item">  
-                <a href="{{ url_for('jadwal') }}" style="color: #00179c;">Jadwal Ruangan</a>
-            </div>
-            <div class="sidebar-item">
-                <a href="http://192.168.159.127" style="color: #00179c;">Akses Pintu</a>
-            </div>
-        </div>
-        <div class="content">
-            <div class="bar">
-                <div class="schedule">
-               
+    <!-- Header section -->
+    <h1 style="text-align: center; color: white; margin-bottom: 20px; padding: 35px">
+        Welcome To Smart Door Lock With Face Recognition</h1>
+
+    <!-- Main content container -->
+    <main>
+        <div class="jadwal">
             <div class="content">
-                <div class="bar">
-                    <div class="History">
-                        <h3 style="color: #00179c;">Riwayat Login</h3>
+                <a href="{{ url_for('jadwal') }}"jadwal.html"> 
+                <img src="/static/css/jadwal.jpg" alt="box 1">
+                </a>
+            <h2>ROOM SCHEDULE</h2>
+            <p style="font-size: 0.9em; color: white;">Easily view the embedded room schedule before using the class in the room schedule feature</p>
+                </a>
+            </div>
+        </div>   
+            <div class="pintu">
+                <div class="content">
+                    <a href="http://192.168.134.127">   
+                    <img src="/static/css/pintu.jpg" alt="box 2">
+                    </a>
+                    <h2>DOOR ACCESS</h2>
+                    <p style="font-size: 0.9em; color: white;">Open the door via advanced facial recognition to access classes on the door access feature</p>
+                </div>
+            </div>
+            <div class="lock">
+                <div class="content">
+                    <a href="">
+                    <img src="/static/css/lock.jpg" alt="box 3">
+                    </a>
+                    <h2>LOCK UNLOCK</h2>
+                    <p style="font-size: 0.9em; color: white;">Lock or open the door automatically with the lock unlock feature on the smart door lock</p>
+                  
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
     <footer>
         <p>&copy; 2023 Politeknik Negeri Jakarta</p>
-    </footer>    
-    
+    </footer>  
 </body>
 </html>

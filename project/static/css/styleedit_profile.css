@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
-    background-image: url(https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=);
+    background-image: url("https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=");
     font-family: 'Poppins', sans-serif;
     margin: 0;
 }
@@ -59,11 +59,10 @@ th {
 /* Container untuk Profile dan Edit */
 .profile-container,
 .edit-container {
-    padding: 20px; /* Menambahkan ruang padding */
+    padding: 10px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 100%;
 }
 
 .profile-container {
@@ -72,10 +71,18 @@ th {
 }
 
 .edit-container {
-    flex: 3; /* 75% lebar dari parent container */
+    flex: 1; /* Equal height to the profile container */
     max-width: 75%;
-    margin-left: 20px; /* Jarak antara container kiri dan kanan */
+    margin-left: 10px; /* Jarak antara container kiri dan kanan */
+    height: 155%; /* Set height to 100% */
 }
+
+.container {
+    display: flex;
+    align-items: stretch; /* Stretch the child containers to the full height */
+    margin: 0 20px; /* Jarak kiri dan kanan */
+}
+
 
 /* Styles untuk elemen form */
 form {
@@ -89,7 +96,7 @@ label {
 }
 
 input {
-    width: 80%;
+    width: 90%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -104,7 +111,7 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #0056b3;
-    width: 80%;
+    width: 90%;
 }
 
 /* Tambahkan gaya lainnya sesuai kebutuhan */

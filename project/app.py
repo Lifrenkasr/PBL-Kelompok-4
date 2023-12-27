@@ -30,7 +30,7 @@ def login():
             return redirect(url_for('register'))  # Arahkan ke halaman registrasi
         username = request.form["username"]
         password = request.form["password"]
-
+        
         print(username, password)
         # Periksa autentikasi pengguna (ganti dengan logika autentikasi sesuai kebutuhan)
         cur = mysql.connection.cursor()
@@ -73,6 +73,7 @@ def register():
             (nama, status, nim_nip, username, password, profile_picture))
             mysql.connection.commit()
             cur.close()
+            
             flash('Registrasi berhasil. Silakan login.')
             return redirect(url_for('login'))
         else:
@@ -138,10 +139,16 @@ def edit_profile():
         status = request.form['status']
         nim_nip = request.form['nim_nip']
         username = request.form['username']
-        password = request.form['password']
+        old_password = request.form['old_password']  # Tambah input untuk password lama
+        new_password = request.form['password']
         
+        # Verifikasi password lama sebelum mengubah
+        if old_password != user_data[4]:  # Jika password lama tidak sesuai dengan yang ada di database
+            flash('Password lama salah. Silakan coba lagi.')
+            return redirect(url_for('edit_profile'))
+
         # Unggah gambar profil
-        filename = user_data[6]  # Mengasumsikan jalur gambar profil berada pada kolom ke-5
+        filename = user_data[6]  # Mengasumsikan jalur gambar profil berada pada kolom ke-7
         if 'profile_picture' in request.files:
             file = request.files['profile_picture']
             if file and allowed_file(file.filename):
@@ -153,15 +160,13 @@ def edit_profile():
         # Koneksi ke database
         cur = mysql.connection.cursor()
         cur.execute("UPDATE users SET nama = %s, status = %s, nim_nip = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
-                    (nama, status, nim_nip, password, filename, datetime.now(), username))
+                    (nama, status, nim_nip, new_password, filename, datetime.now(), username))
         mysql.connection.commit()
         cur.close()
         flash('Profil berhasil diubah.')
         return redirect(url_for('dashboard'))
 
     return render_template('edit_profile.html', user_data=user_data)
-
-
 
 
 # Rute untuk logout
@@ -174,4 +179,4 @@ def logout():
 
 if __name__ == '__main__':
     app.secret_key = 'your_secret_key'
-    app.run(debug=True, host="127.0.0.1", port=5000)
+app.run(debug=True, host="127.0.0.1", port=5000)
