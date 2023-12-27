@@ -1,0 +1,56 @@
+<!-- jadwal_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Jadwal</title>
+    <link rel="stylesheet" type="text/css" href="static/css/stylejadwal.css">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px; /* Add some margin to the top for better spacing */
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="static/css/stylejadwal.css">
+</head>
+
+<body>
+    <video class="video-bg" autoplay muted loop>
+        <source src="/static/css/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h2>Daftar Jadwal</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Hari</th>
+                <th>Waktu</th>
+                <th>Kelas</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jadwal in jadwal_list %}
+                <tr>
+                    <td>{{ jadwal.day }}</td>
+                    <td>{{ jadwal.time }}</td>
+                    <td>{{ jadwal.class_name }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}">Edit</a>
+                        <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}">Hapus</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ url_for('add_jadwal') }}">Tambah Jadwal Baru</a>
+</body>
+
+</html>

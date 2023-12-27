@@ -1,0 +1,33 @@
+<!-- edit_jadwal.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Jadwal</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styleedit_jadwal.css">
+</head>
+
+<body>
+    <video class="video-bg" autoplay muted loop>
+        <source src="/static/css/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h2>Edit Jadwal</h2>
+    <form method="post" action="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}">
+        <label for="day">Hari:</label>
+        <input type="text" id="day" name="day" value="{{ jadwal.day }}" required><br>
+
+        <label for="time">Waktu:</label>
+        <input type="text" id="time" name="time" value="{{ jadwal.time }}" required><br>
+
+        <label for="class">Kelas:</label>
+        <input type="text" id="class" name="class" value="{{ jadwal.class }}" required><br>
+
+        <button type="submit">Simpan Perubahan</button>
+    </form>
+</body>
+
+</html>

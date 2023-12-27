@@ -1,0 +1,141 @@
+body, h1, h2, p, button {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.video-bg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.left img {
+    height: 70px;
+    width: 70px;
+    margin-right: 10px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.logout-button {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.right img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: -5px;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100vh;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgba(0, 0, 0, 0.1); /* Misalnya memberikan latar belakang transparan pada elemen main */
+}
+
+
+
+.container {    
+    display: flex;
+    justify-content: center; /* Mengatur agar konten berada di tengah secara horizontal */
+    align-items: center; /* Mengatur agar konten berada di tengah secara vertikal */
+    margin-top: 20px;
+    background-color: rgba(52, 50, 50, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    flex-wrap: wrap; /* Untuk menangani wrapping jika lebar layar terlalu kecil */
+}
+
+/* Perubahan pada setiap kotak */
+.jadwal,
+.pintu,
+.lock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 30%; /* Mengatur lebar setiap kotak */
+    margin: 10px; /* Menambahkan margin di sekitar setiap kotak */
+    color: aliceblue;
+}
+
+
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+.jadwal {
+    order: 1;
+}
+
+.pintu {
+    order: 2;
+}
+
+.lock {
+    order: 3;
+}
+
+.content img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    
+}
+
+footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+
+    color: white;
+    padding: 15px 0; /* Mengubah padding atas dan bawah */
+    text-align: center;
+    font-size: 14px; /* Mengubah ukuran teks */
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+

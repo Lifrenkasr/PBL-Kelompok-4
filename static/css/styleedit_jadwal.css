@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Ganti dengan warna latar belakang yang diinginkan */
+}
+
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+h2 {
+    margin-top: 20px;
+    text-align: center;
+    color: #fff; 
+    position: absolute;
+    top: 50px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+}
+
+
+form {
+    background-color: rgba(168, 166, 166, 0.9); /* Ganti dengan warna latar belakang formulir yang diinginkan */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Sesuaikan dengan lebar formulir yang diinginkan */
+    opacity: 0.8;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4caf50; /* Ganti dengan warna tombol yang diinginkan */
+    color: #fff; /* Ganti dengan warna teks tombol yang diinginkan */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* Ganti dengan warna tombol hover yang diinginkan */
+}
