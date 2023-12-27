@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import base64
 import os
 
@@ -26,27 +27,30 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if 'register' in request.form:  # Jika tombol register diklik
-            return redirect(url_for('register'))  # Arahkan ke halaman registrasi
+        if 'register' in request.form:
+            return redirect(url_for('register'))
         username = request.form["username"]
         password = request.form["password"]
-        
-        print(username, password)
-        # Periksa autentikasi pengguna (ganti dengan logika autentikasi sesuai kebutuhan)
+
+        # Periksa autentikasi pengguna
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
         user = cur.fetchone()
         cur.close()
 
-        print(user)
         if user:
+            # Catat log access ke database
+            log_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            action = "Login"
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO access_log (username, log_time, action) VALUES (%s, %s, %s)", (username, log_time, action))
+            mysql.connection.commit()
+            cur.close()
+
             session['username'] = user[3]
-            # Autentikasi berhasil, tambahkan logika sesuai kebutuhan
             return redirect(url_for('dashboard'))
         else:
             flash(f'Login gagal. Cek kembali username dan password.')
-            print(f'Login gagal. Cek kembali username dan password.')
-
 
     return render_template('log.html')
 
@@ -92,9 +96,15 @@ def dashboard():
         cur.close()
 
         profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+        
+        if 'username' in session:
+                # Koneksi ke database
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM access_log ORDER BY log_time DESC LIMIT 100")  # Ambil 100 log terakhir
+            access_logs = cur.fetchall()
+            cur.close()
 
-
-        return render_template('Dashboard.html', profile_picture=profile_picture)
+        return render_template('dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
     else:
         return redirect(url_for('login'))
     

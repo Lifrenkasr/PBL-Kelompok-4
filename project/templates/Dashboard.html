@@ -81,6 +81,29 @@
             </div>
         </div>
     </main>
+    <h1 style="text-align: center; color: white; margin-up: 30px;">Access Login</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Log Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in access_logs %}
+                <tr>
+                    <td>{{ log[0] }}</td>
+                    <td>{{ log[1] }}</td>
+                    <td>{{ log[2] }}</td>
+                    <td>{{ log[3] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
     <footer>
         <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
     </footer>  

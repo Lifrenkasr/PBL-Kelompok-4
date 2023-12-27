@@ -72,6 +72,7 @@ main {
     padding-top: 0px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 40px;
     background-color: rgba(0, 0, 0, 0.1); /* Misalnya memberikan latar belakang transparan pada elemen main */
 }
 
@@ -125,6 +126,29 @@ main {
     border-radius: 50%;
     margin-bottom: 10px;
     
+}
+
+
+table {
+    width: 100%; /* Mengurangi lebar tabel menjadi 50% dari lebar viewport */
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: rgba(251, 251, 251, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #0a0a0a;
+    color: #1a1919;
+}
+
+th {
+    background-color: #050505;
+    color: #f5f2f2;
 }
 
 footer {
