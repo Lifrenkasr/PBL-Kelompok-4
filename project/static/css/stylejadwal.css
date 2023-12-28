@@ -1,67 +1,117 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+/* stylejadwal.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 0px;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
-    margin: 0;
-    overflow-y: auto; /* Menambahkan properti overflow untuk bisa di-scroll */
-}
-
-header {
-    padding: 20px;
-    text-align: left;
-    color: white;
+    background-color: #f4f4f4;
+    color: #fff;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-footer {
-    background-color: #070708;
-    color: white;
-    text-align: center;
-    padding: 5px 0; /* Mengurangi tinggi padding di footer */
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0.8;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}   
 
 .container {
+    max-width: 3000px;
+    margin: 20px auto; /* Memperbaiki properti 'center' */
+    background-color: transparent; /* Diatur menjadi transparan */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+.table-header {
+    margin-bottom: 20px;
+}
+
+form {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 65vh; /* Mengurangi ketinggian kontainer untuk membuat ruang pada bagian bawah */
-    margin-bottom: 30px; /* Menambahkan margin bawah untuk memberi jarak antara tabel dan footer */
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 30px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 table {
-    width: 50%; /* Mengurangi lebar tabel menjadi 50% dari lebar viewport */
+    width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 20px;
     background-color: rgba(251, 251, 251, 0.7);
 }
-
-
-th,
-td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #0a0a0a;
-    color: #1a1919;
-}
-
 th {
+    padding: 100px; /* Menyesuaikan padding untuk memberikan lebih banyak ruang */
+    padding-block: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
     background-color: #050505;
     color: #f5f2f2;
 }
 
-.video-bg {
+td {
+    padding: 100px; /* Menyesuaikan padding untuk memberikan lebih banyak ruang */
+    padding-block: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    border-bottom: 1px solid #0a0a0a;
+    color: #1a1919;
+}
+
+
+.action-link {
+    margin-right: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+footer {
     position: fixed;
-    right: 0;
     bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
+    width: 100%;
+    color: white;
+    padding: 15px 0; /* Mengubah padding atas dan bawah */
+    text-align: center;
+    font-size: 14px; /* Mengubah ukuran teks */
+    background-color: rgba(0, 0, 0, 0.7);
 }

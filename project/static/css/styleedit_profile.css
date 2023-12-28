@@ -16,24 +16,12 @@ header {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-footer {
-    background-color: #070708;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0.8;
-}
-
 .container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 75vh;
-    margin: 0 20px; /* Jarak kiri dan kanan */
+    margin-bottom: 100px; /* Jarak kiri dan kanan */
 }
 
 table {
@@ -74,7 +62,7 @@ th {
     flex: 1; /* Equal height to the profile container */
     max-width: 75%;
     margin-left: 10px; /* Jarak antara container kiri dan kanan */
-    height: 155%; /* Set height to 100% */
+    height: 145%; /* Set height to 100% */
 }
 
 .container {
@@ -118,4 +106,16 @@ input[type="submit"]:hover {
 h1 {
     color: #333;
     text-align: left;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    color: white;
+    padding: 15px 0; /* Mengubah padding atas dan bawah */
+    text-align: center;
+    font-size: 14px; /* Mengubah ukuran teks */
+    background-color: rgba(0, 0, 0, 0.7);
 }
