@@ -149,6 +149,10 @@ header {
     order: 3;
 }
 
+.edit-jadwal{
+    order: 4;
+}
+
 .content img {
     width: 100px;
     height: 100px;
@@ -156,6 +160,31 @@ header {
     margin-bottom: 10px;
     
 }
+.content {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.content p {
+    display: block;
+    position: absolute;
+    bottom: -30px; /* Ubah jarak paragraf dari konten */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    width: 80%;
+    opacity: 0; /* Paragraf akan default tersembunyi */
+    transition: opacity 0.3s ease-in-out; /* Efek transisi saat muncul */
+}
+
+.content:hover p {
+    opacity: 1; /* Paragraf akan muncul saat kursor berada di atas konten */
+}
+
+
 
 table {
     width: 85%;
