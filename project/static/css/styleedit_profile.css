@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
-    background-image: url(https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=);
+    background-image: url("https://media.istockphoto.com/id/1163988938/id/vektor/keamanan-data-dan-konsep-privasi-visualisasi-abstrak-keamanan-informasi-pribadi-atau-bisnis.jpg?s=612x612&w=0&k=20&c=f0c5m3jUz27W-6hiOQ3Nw1IzQCJ6yYy2Ysopzbhpgp0=");
     font-family: 'Poppins', sans-serif;
     margin: 0;
 }
@@ -13,19 +13,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-footer {
-    background-color: #070708;
-    color: white;
-    text-align: center;
-    padding: 10px;
+.video-bg {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
-    right: 0;
-    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 
 .container {
@@ -33,7 +31,7 @@ footer {
     justify-content: space-around;
     align-items: center;
     height: 75vh;
-    margin: 0 20px; /* Jarak kiri dan kanan */
+    margin-bottom: 100px; /* Jarak kiri dan kanan */
 }
 
 table {
@@ -53,18 +51,18 @@ td {
 
 th {
     background-color: #050505;
-    color: #f5f2f2;
+    color: #beb6b6;
 }
 
 /* Container untuk Profile dan Edit */
 .profile-container,
 .edit-container {
-    padding: 10px; /* Menambahkan ruang padding */
-    background-color: #fff;
+    padding: 10px;
+    background-color: rgba(201, 201, 201, 0.7); /* Ubah nilai alpha untuk mengatur tingkat transparansi */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 100%;
 }
+
 
 .profile-container {
     flex: 1; /* 25% lebar dari parent container */
@@ -72,11 +70,18 @@ th {
 }
 
 .edit-container {
-    flex: 3; /* 75% lebar dari parent container */
+    flex: 1; /* Equal height to the profile container */
     max-width: 75%;
-    margin-left: 20px; /* Jarak antara container kiri dan kanan */
-    min-height: 100%;
+    margin-left: 10px; /* Jarak antara container kiri dan kanan */
+    height: 145%; /* Set height to 100% */
 }
+
+.container {
+    display: flex;
+    align-items: stretch; /* Stretch the child containers to the full height */
+    margin: 0 20px; /* Jarak kiri dan kanan */
+}
+
 
 /* Styles untuk elemen form */
 form {
@@ -90,7 +95,7 @@ label {
 }
 
 input {
-    width: 80%;
+    width: 90%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -105,11 +110,25 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #0056b3;
-    width: 80%;
+    width: 90%;
 }
 
 /* Tambahkan gaya lainnya sesuai kebutuhan */
 h1 {
     color: #333;
     text-align: left;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 5%;
+    
+
+    color: white;
+    padding: 15px 0; /* Mengubah padding atas dan bawah */
+    text-align: center;
+    font-size: 14px; /* Mengubah ukuran teks */
+    background-color: rgba(0, 0, 0, 0.7);
 }
