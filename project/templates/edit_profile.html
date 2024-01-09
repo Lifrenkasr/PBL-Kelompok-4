@@ -8,7 +8,7 @@
     <!-- ... (file css lainnya) ... -->
 </head>
 <body>
-    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+    <header>
         <div class="left" style="display: flex; align-items: center;">
             <img src="/static/css/Logo.png" 
             alt="Logo" style="height: 60px; width: 60px; margin-right: 10px;">
@@ -19,11 +19,16 @@
         </div>
         <div class="right">
             <!-- Tampilkan informasi profil -->
-            <div style="display: flex; align-items: center; margin-right: 10px; text decoration: none underline;">
-                <a href="{{ url_for('dashboard') }}" style="color: white;">Home | </a>
-                <a href="{{ url_for('logout') }}" style="color: white;">|  Log Out   </a>
+            <div style="display: flex; align-items: center; margin-right: 10px;">
+                <a href="{{ url_for('dashboard') }}" style="color: white; text-decoration: none;">Home |</a>
+                <a href="{{ url_for('logout') }}" style="color: white; margin-left: 5px; text-decoration: none;">Log Out</a>
             </div>
+            
         </div>
+        <video class="video-bg" autoplay muted loop>
+            <source src="/static/css/bg3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </header>
 
     <div class="container">

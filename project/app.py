@@ -205,6 +205,28 @@ def delete_jadwal(jadwal_id):
     flash('Jadwal berhasil dihapus.')
     return redirect(url_for('jadwal_list'))
 
+# Rute untuk menampilkan view jadwal
+@app.route('/view_jadwal', methods=['GET'])
+def view_jadwal():
+    if 'username' in session:
+        # Koneksi ke database
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
+        user_data = cur.fetchone()
+        cur.close()
+
+        profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+
+        # Ambil data jadwal dari database
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT day, time, class FROM jadwal")
+        jadwal_list = cur.fetchall()
+        cur.close()
+
+        return render_template('view_jadwal.html', jadwal_list=jadwal_list, profile_picture=profile_picture)
+    else:
+        return redirect(url_for('login'))
+    
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
 
