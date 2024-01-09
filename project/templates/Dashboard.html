@@ -40,7 +40,7 @@
             <div style="display: flex; align-items: center; margin-right: 10px;">
                 <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -5px;"
                     onclick="redirectToEditProfile()">
-              
+            
             </div>
         </div>
     </header>
@@ -50,39 +50,58 @@
 
     <!-- Main content container -->
     <main>
-        <div class="jadwal">
-            <div class="content">
-                <a href="{{ url_for('jadwal_list') }}"jadwal_list.html"> 
-                <img src="/static/css/jadwal.jpg" alt="box 1">
-                </a>
-            <h2>ROOM SCHEDULE</h2>
-            <p style="font-size: 0.9em; color: white;">Easily view the embedded room schedule before using the class in the room schedule feature</p>
-                </a>
+        <div class="top-content">
+            <div class="jadwal">
+                <div class="content">
+                    <a href="{{ url_for('view_jadwal') }}">
+                        <img src="/static/css/jadwal.jpg" alt="box 1">
+                    </a>
+                    <h2>VIEW ROOM SCHEDULE</h2>
+                    <p style="font-size: 0.9em; color: white;">Easily view the embedded room schedule before using the class in the room schedule feature</p>
+                </div>
             </div>
-        </div>   
+            
             <div class="pintu">
                 <div class="content">
-                    <a href="http://192.168.134.127">   
-                    <img src="/static/css/pintu.jpg" alt="box 2">
+                    <a href="http://192.168.134.127">
+                        <img src="/static/css/pintu.jpg" alt="box 2">
                     </a>
                     <h2>DOOR ACCESS</h2>
                     <p style="font-size: 0.9em; color: white;">Open the door via advanced facial recognition to access classes on the door access feature</p>
                 </div>
             </div>
+           
+            
+            
+        </div>
+
+        <div class="bottom-content">
             <div class="lock">
                 <div class="content">
+                    <a href="{{ url_for('jadwal_list') }}">
+                        <img src="/static/css/jadwal.jpg" alt="box 3">
+                    </a>
+                    <h2>EDITED ROOM SCHEDULE</h2>
+                    <p style="font-size: 0.9em; color: white;">Edit the room schedule using the edit schedule feature</p>
+                </div>
+            </div>
+       
+            <div class="edit-jadwal">
+                <div class="content">
                     <a href="">
-                    <img src="/static/css/lock.jpg" alt="box 3">
+                        <img src="/static/css/lock.jpg" alt="box 4">
                     </a>
                     <h2>LOCK UNLOCK</h2>
                     <p style="font-size: 0.9em; color: white;">Lock or open the door automatically with the lock unlock feature on the smart door lock</p>
-                  
                 </div>
             </div>
-        </div>
-    </main>
-    <h1 style="text-align: center; color: white; margin-up: 30px;">Access Login</h1>
+
+        </main>
+
     <table border="1">
+        <caption style="caption-side: top; text-align: center; font-size: 24px; color: white; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
+            Access Login
+        </caption>
         <thead>
             <tr>
                 <th>ID</th>
@@ -108,4 +127,4 @@
         <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
     </footer>  
 </body>
-</html>
+</html> 

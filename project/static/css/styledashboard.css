@@ -63,49 +63,78 @@ header {
     cursor: pointer;
 }
 
-main {
+/* Bagian CSS lainnya */
+
+.main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    flex-direction: row;
+    justify-content: center;
     height: 50vh;
-    padding-top: 0px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 40px;
-    background-color: rgba(0, 0, 0, 0.1); /* Misalnya memberikan latar belakang transparan pada elemen main */
-}
-
-
-
-.container {    
-    display: flex;
-    justify-content: center; /* Mengatur agar konten berada di tengah secara horizontal */
-    align-items: center; /* Mengatur agar konten berada di tengah secara vertikal */
-    margin-top: 20px;
-    background-color: rgba(52, 50, 50, 0.7);
     padding: 20px;
-    border-radius: 10px;
-    flex-wrap: wrap; /* Untuk menangani wrapping jika lebar layar terlalu kecil */
+    padding-bottom: 70px; /* Menyesuaikan padding untuk mencoba menyelaraskan top-content dan bottom-content */
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Perubahan pada setiap kotak */
+.top-content,
+.bottom-content {
+    display: flex;
+    justify-content: center; /* Mengubah space-around menjadi space-between */
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Gaya setiap box di top content dan bottom content */
 .jadwal,
+.edit-jadwal,
 .pintu,
 .lock {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 30%; /* Mengatur lebar setiap kotak */
-    margin: 10px; /* Menambahkan margin di sekitar setiap kotak */
+    width: calc(30% - 20px); /* Menghitung ulang lebar untuk memperhitungkan margin */
+    margin: 10px; /* Menyesuaikan margin */
+    padding: 20px; /* Menyesuaikan padding */
     color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.7); /* Memberikan latar belakang agar lebih jelas */
+    border-radius: 8px; /* Memberikan border radius untuk sudut yang lebih halus */
+    box-sizing: border-box; /* Memastikan padding tidak menambah lebar elemen */
 }
+
+.content img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Koreksi radius untuk membuat lingkaran */
+    margin-bottom: 15px; /* Meningkatkan jarak dari bawah gambar */
+}
+
+.jadwal .content img,
+.edit-jadwal .content img,
+.pintu .content img,
+.lock .content img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease; /* Menambahkan transisi untuk efek animasi */
+}
+
+/* Menambahkan efek saat hover */
+.jadwal .content img:hover,
+.edit-jadwal .content img:hover,
+.pintu .content img:hover,
+.lock .content img:hover {
+    transform: scale(1.1); /* Memperbesar gambar saat hover */
+}   
+
 
 
 .content {
     padding: 20px;
     text-align: center;
+    color: #f4f4f4;
 }
 
 .jadwal {
@@ -120,23 +149,55 @@ main {
     order: 3;
 }
 
+.edit-jadwal{
+    order: 4;
+}
+
 .content img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 45%;
     margin-bottom: 10px;
     
 }
+.content {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.content p {
+    display: block;
+    position: absolute;
+    bottom: -30px; /* Ubah jarak paragraf dari konten */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    width: 80%;
+    opacity: 0; /* Paragraf akan default tersembunyi */
+    transition: opacity 0.3s ease-in-out; /* Efek transisi saat muncul */
+}
+
+.content:hover p {
+    opacity: 1; /* Paragraf akan muncul saat kursor berada di atas konten */
+}
+
 
 
 table {
-    width: 100%; /* Mengurangi lebar tabel menjadi 50% dari lebar viewport */
+    width: 85%;
     border-collapse: collapse;
     margin-top: 15px;
     background-color: rgba(251, 251, 251, 0.7);
-    align-items: center;
-    justify-content: center;
+    margin-left: auto; /* Menengahkan tabel secara horizontal */
+    margin-right: auto; /* Menengahkan tabel secara horizontal */
+    align-items: center; /* Ini tidak diperlukan untuk tabel */
+    justify-content: center; /* Ini tidak diperlukan untuk tabel */
 }
+
+
 
 th,
 td {

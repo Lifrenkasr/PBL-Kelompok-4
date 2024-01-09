@@ -42,38 +42,28 @@
         Your browser does not support the video tag.
     </video>
     <div class="container">
-        <h2 style="text-align: center; color: #fff;">Admin Room schedule</h2>
+        <h2 style="text-align: center; color: #fff;">View Room Schedule</h2>
         <table border="1">
             <thead>
                 <tr>
                     <th style="width: 20%;">Day</th>
                     <th style="width: 20%;">Time</th>
                     <th style="width: 30%;">Class</th>
-                    <th style="width: 30%;">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for jadwal in jadwal_list %}
                     <tr>
-                        <td>{{ jadwal.day }}</td>
-                        <td>{{ jadwal.time }}</td>
-                        <td>{{ jadwal.class_name }}</td>
-                        <td>
-                            <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}">Edit</a> <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}">Clear</a>
-                        </td>
+                        <td>{{ jadwal[0] }}</td>
+                        <td>{{ jadwal[1] }}</td>
+                        <td>{{ jadwal[2] }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <br>
-        <div style="text-align: center;">
-            <a href="{{ url_for('add_jadwal') }}" style="padding: 10px; border-radius: 4px; color: white;">Add New Schedule</a>
-        </div>
     </div>
-
     <footer>
         <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
     </footer>
 </body>
-
 </html>
