@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
     <div class="left" style="display: flex; align-items: center;">
         <img src="/static/css/Logo.png" 
         alt="Logo" style="height: 60px; width: 60px; margin-right: 10px;">
@@ -59,7 +59,8 @@
                         <td>{{ jadwal.time }}</td>
                         <td>{{ jadwal.class_name }}</td>
                         <td>
-                            <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}">Edit</a> <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}">Hapus</a>
+                            <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}" class="edit">Edit</a> 
+                            <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}" class="delete">Hapus</a>
                         </td>
                     </tr>
                 {% endfor %}

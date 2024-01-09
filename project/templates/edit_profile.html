@@ -34,34 +34,34 @@
     <div class="container">
         <!-- Bagian Kiri - Profile Account -->
         <div class="profile-container">
-            <h2>Profile Account</h2>
+            <h2 style="text-align: center;">Profile Account</h2>
             <!-- Tampilkan foto profil dari database -->
-            <img src="{{ url_for('uploaded_file', filename=user_data[6]) }}" style="height: 170px; width: 170px; border-radius: 50%; margin-right: 0px;">
+            <img src="{{ url_for('uploaded_file', filename=user_data[6]) }} " style="display: block; margin: 0 auto;" >
     <!-- Tampilkan informasi profil dari database -->
-            <p><strong>Nama:</strong> {{ user_data[0] }}</p>
-            <p><strong>Status:</strong> {{ user_data[1] }}</p>
-            <p><strong>NIM/NIP:</strong> {{ user_data[2] }}</p>
+            <p><strong>Nama    :</strong> {{ user_data[0] }}</p>
+            <p><strong>Status  :</strong> {{ user_data[1] }}</p>
+            <p><strong>NIM/NIP :</strong> {{ user_data[2] }}</p>
             <p><strong>Username:</strong> {{ user_data[3] }}</p>
         </div>
 
         <!-- Bagian Kanan - Edited Profile Account -->
         <div class="edit-container">
             <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
-                <h1>Edited Profile Account</h1>
+                <h1 style="text-align: center;">Edited Profile Account</h1>
                 
-                <label for="new_nama">Name:</label>
+                <label for="new_nama"><strong>Name:</strong></label>
                 <input type="text" name="nama" required placeholder="Enter Your Full Name" value="{{ user_data[0] }}">
 
-                <label for="new_status">Status:</label>
+                <label for="new_status"><strong>Status:</strong></label>
                 <input type="text" name="status" required placeholder="Enter Your Status" value="{{ user_data[1] }}">
 
-                <label for="new_nim_nip">NIM/NIP:</label>
+                <label for="new_nim_nip"><strong>NIM/NIP:</strong></label>
                 <input type="text" name="nim_nip" required placeholder="Enter Your NIM/NIP" value="{{ user_data[2] }}">
     
-                <label for="new_username">Username:</label>
+                <label for="new_username"><strong>Username:</strong></label>
                 <input type="text" name="username" required placeholder="Enter Your Username for Login" value="{{ user_data[3] }}">
 
-                <label for="old_password">Old Password:</label>
+                <label for="old_password"><strong>Old Password:</strong></label>
                 <input type="password" name="old_password" required placeholder="Enter Your Old Password">
                     {% with messages = get_flashed_messages(category_filter='old_password') %}
                         {% if messages %}
@@ -73,10 +73,10 @@
                         {% endif %}
                     {% endwith %}
                 
-                <label for="new_password">Password:</label>
+                <label for="new_password"><strong>Password:</strong></label>
                 <input type="password" name="password" required placeholder="Enter Your New Password">
         
-                <label for="new_profile_picture">Foto Profil Baru:</label>
+                <label for="new_profile_picture"><strong>Foto Profil Baru:</strong></label>
                 <input type="file" name="profile_picture">
                     {% with messages = get_flashed_messages(category_filter='profile_picture') %}
                         {% if messages %}

@@ -1,142 +1,128 @@
-/* styleregis.css */
-
-/* Reset default margin and padding */
+/* Reset default browser styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Basic styling for body and container */
+/* Body styles */
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  background-color: #f4f4f4;
+  color: #fff; /* Mengubah warna teks menjadi putih */
 }
 
-.container {
-  display: flex;
-  height: 100vh;
-}
-.left-side {
-            /* Existing styles */
-            width: 50%;
-            padding: 20px;
-            box-sizing: border-box;
-            background-image: url();
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .video-bg {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: -1;
-          object-fit: cover;
-      }        
-
-        /* Tambahkan gaya pada judul "WELCOME TO SMART LOCK DOOR" */
-.left-side h2 {
-  font-size: 3em; /* Ukuran font yang besar */
-  color: #c4c1c1; /* Warna teks */
-  text-align: center; /* Pusatkan teks */
-  margin-top: 50px; /* Jarak atas dari elemen di atasnya */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Bayangan teks */
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  z-index: -1;
+  object-fit: cover;
 }
 
-
-        .left-side p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        /* Media query for responsiveness */
-        @media screen and (max-width: 768px) {
-            .left-side {
-                width: 100%;
-            }
-        }
-
-.right-side {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url();
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.signup-box {
-  width: 60%;
-  max-width: 400px; /* Set a maximum width for the form */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(195, 194, 194, 0.1);
+/* Container styles */
+.register-container {
+  width: 400px;
+  margin: 50px auto;
   background: transparent;
-  background-color: rgba(62, 63, 64, 0.9); /* Ubah nilai alpha untuk transparansi */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Top section styles */
+.register-container .top {
   text-align: center;
-  animation: fadeIn 1s ease-in-out; /* Animasi fadeIn */
-  transform: scale(0.85);
-
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px); /* Pilihan: Ubah posisi awal saat animasi dimulai */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); /* Pilihan: Ubah posisi akhir saat animasi selesai */
-  }
-}
-
-
-.form-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  color: #FFF;
+.register-container .top header {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.form-control {
+.register-container .top a {
+  text-decoration: none;
+  color: #fff; /* Mengubah warna tautan menjadi putih */
+}
+
+/* Form styles */
+.register-container form .form-group {
+  margin-bottom: 15px;
+}
+
+.register-container form .form-group label {
+  display: none;
+  margin-bottom: 5px;
+  color: #fff; /* Mengubah warna teks label menjadi putih */
+}
+
+/* Form control styles */
+.register-container form .form-control {
   width: 100%;
   padding: 10px;
-  border-radius: 5px;
+  font-size: 16px;
   border: 1px solid #ccc;
+  border-radius: 20px; /* Memberikan bulatan pada semua sisi */
+  outline: none;
+  background: transparent;
+  color: #fff; /* Warna teks input */
 }
 
-.btn--form {
+
+.register-container form .two-col input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.register-container form .two-col label a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.register-container form .submit {
   width: 100%;
   padding: 10px;
   border: none;
-  border-radius: 5px;
-  background-color: #007bff;
+  background: #007bff;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.register-container form .submit:hover {
+  background: #0056b3;
+}
+
+.btn--form {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #404040;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  text-align: center;
 }
 
 .btn--form:hover {
-  background-color: #0056b3;
+  background-color: #8a8787;
 }
 
-.signup__link {
-  color: #007bff;
+.login-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.login-link a {
   text-decoration: none;
+  color: #3481d3;
 }

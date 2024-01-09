@@ -55,10 +55,10 @@ th {
 }
 
 /* Container untuk Profile dan Edit */
-.profile-container,
+
 .edit-container {
     padding: 10px;
-    background-color: rgba(201, 201, 201, 0.7); /* Ubah nilai alpha untuk mengatur tingkat transparansi */
+    background-color: rgba(91, 91, 91, 0.7); /* Ubah nilai alpha untuk mengatur tingkat transparansi */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -67,13 +67,29 @@ th {
 .profile-container {
     flex: 1; /* 25% lebar dari parent container */
     max-width: 25%;
+    background-color: rgba(240, 240, 240, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
+.profile-container img {
+    height: 170px;
+    width: 170px;
+    border-radius: 50%; /* Membuat gambar bulat */
+    margin-right: 0px;
+    object-fit: cover; /* Menyesuaikan gambar ke dalam lingkaran */
+    border: 4px solid white; /* Opsional: Tambahkan border */
+}
+
+
 .edit-container {
-    flex: 1; /* Equal height to the profile container */
+    flex: 1;
     max-width: 75%;
-    margin-left: 10px; /* Jarak antara container kiri dan kanan */
-    height: 145%; /* Set height to 100% */
+    margin-left: 10px;
+    height: calc(100vh - 200px); /* 100% tinggi viewport dikurangi tinggi footer dan sedikit ruang bawah */
+    overflow: auto;
+    margin-bottom: 20px; /* Menambah ruang bawah container agar tombol "SAVE" tidak tertutup oleh footer */
 }
 
 .container {
@@ -86,38 +102,53 @@ th {
 /* Styles untuk elemen form */
 form {
     max-width: 100%; /* Mengisi lebar container */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan secara horizontal */
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: #000000;
+    text-align: center; /* Pusatkan teks label */
 }
 
-input {
-    width: 90%;
-    padding: 10px;
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: 60%; /* Mengurangi lebar input */
+    padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; /* Pastikan ukuran input termasuk padding dan border */
 }
 
 input[type="submit"] {
+    width: 30%; /* Ukuran tombol SAVE */
+    padding: 10px;
+    margin-top: 10px; /* Jarak dari input ke tombol SAVE */
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box; /* Pastikan ukuran tombol termasuk padding dan border */
 }
 
 input[type="submit"]:hover {
     background-color: #0056b3;
-    width: 90%;
 }
 
 /* Tambahkan gaya lainnya sesuai kebutuhan */
+h2,
 h1 {
-    color: #333;
+    color: #000000;
     text-align: left;
 }
+
+
 
 footer {
     position: fixed;
