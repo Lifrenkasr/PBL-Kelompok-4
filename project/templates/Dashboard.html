@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href=static/css/styledashboard.css>
-</head>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="static/css/styledashboard.css">
+    
+        <script>
+            function redirectToEditProfile() {
+                window.location.href = "{{ url_for('edit_profile') }}";
+            }
+        </script>
+        <script>
+            document.getElementById("logout-button").onclick = function() {
+                window.location.href = "{{ url_for('login') }}";
+            };
+        </script>
+        
+    </head>
 <body>
-    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+    <video class="video-bg" autoplay muted loop>
+        <source src="/static/css/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
         <div class="left" style="display: flex; align-items: center;">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcLo2kLxv0XvNG4UjSqVxZCCNnwgrxDr35oAyXWEA5j7FPbJj7EfRqVkSe5311SlNO5mQwZ7X-Pe8cNk53xnOwvuBPRV7jQBH8nfQsXDfvZ9N5T9VTYWKjaPWktVfQOX1guTvVDxaYCUN4UCeoq2lv6YNZkjQ2dyReDeAN0V1_4zhn1dCP4kVyU1tSpxk/s780/Logo%20Poltek%20Negeri%20Jakarta%20%5BDesaingratis.web.id%5D.png" alt="Logo" style="height: 50px; width: 50px; margin-right: 10px;">
+            <img src="/static/css/Logo.png" alt="Logo" style="height: 60px; width: 60px; margin-right: 10px;">
             <div>
-                <h2 style="margin: 0; color: white;">Smart Class Embedded Room</h2>
-                <p style="margin: 0; color: white;">Politeknik Negeri Jakarta</p>
+                <h2 style="margin: 0; color: white;">Smart Door Lock Embedded Room</h2>
+                <p style="margin: 0; color: white;">Door Lock With Face Recognition</p>
             </div>
         </div>
-        <div class="right">
-                            <!-- Tautan ke halaman login menggunakan JavaScript -->
-                <button class="logout" id="logout-button">Logout</button>
-                <script>
-                document.getElementById("logout-button").onclick = function() {
-                    window.location.href = "{{ url_for('login') }}";
-                };
-                </script>
+        <div class="right" style="display: flex; align-items: center;">
+            <!-- Tampilkan informasi profil -->
+            <a href="{{ url_for('login') }}" class="logout-button">Log Out</a>
 
-
-
+            
+            <div style="display: flex; align-items: center; margin-right: 10px;">
+                <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -5px;"
+                    onclick="redirectToEditProfile()">
+              
+            </div>
         </div>
     </header>
-    <div class="container">
-        <div class="sidebar">
-            <div class="sidebar-item">
-                <a href="#" style="color: #00179c;">Jadwal Ruangan</a>
+    <!-- Header section -->
+    <h1 style="text-align: center; color: white; margin-bottom: 20px; padding: 35px">
+        Welcome To Smart Door Lock With Face Recognition</h1>
+
+    <!-- Main content container -->
+    <main>
+        <div class="jadwal">
+            <div class="content">
+                <a href="{{ url_for('jadwal_list') }}"jadwal_list.html"> 
+                <img src="/static/css/jadwal.jpg" alt="box 1">
+                </a>
+            <h2>ROOM SCHEDULE</h2>
+            <p style="font-size: 0.9em; color: white;">Easily view the embedded room schedule before using the class in the room schedule feature</p>
+                </a>
             </div>
-            <div class="sidebar-item">
-                <a href="#" style="color: #00179c;">Akses Pintu</a>
-            </div>
-        </div>
-        <div class="content">
-            <div class="bar">
-                <div class="schedule">
-                    <h3 style="color: #00179c;">Jadwal Ruangan</h3>
-                    <!-- Tambahkan jadwal ruangan di sini -->
-                    <table class="table" border="1">
-                        
-                        <tr>
-                            <th>Hari</th>
-                            <th>Jam Durasi</th>
-                            <th>Kelas</th>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Senin</td>
-                            <td>07.30 - 10.50</td>
-                            <td>Kelas A</td>
-                        </tr>
-                        <tr>
-                            <td>13.00 - 15.50</td>
-                            <td>Kelas B</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Selasa</td>
-                            <td>07.30 - 10.50</td>
-                            <td>Kelas C</td>
-                        </tr>
-                        <tr>
-                            <td>13.00 - 15.50</td>
-                            <td>Kelas D</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Rabu</td>
-                            <td>07.30 - 10.50</td>
-                            <td>Kelas E</td>
-                        </tr>
-                        <tr>
-                            <td>13.00 - 15.50</td>
-                            <td>Kelas F</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Kamis</td>
-                            <td>07.30 - 10.50</td>
-                            <td>Kelas G</td>
-                        </tr>
-                        <tr>
-                            <td>13.00 - 15.50</td>
-                            <td>Kelas H</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Jumat</td>
-                            <td>07.30 - 10.50</td>
-                            <td>Kelas I</td>
-                        </tr>
-                        <tr>
-                            <td>13.00 - 15.50</td>
-                            <td>Kelas J</td>
-                        </tr>
-                    </table>
+        </div>   
+            <div class="pintu">
+                <div class="content">
+                    <a href="http://192.168.134.127">   
+                    <img src="/static/css/pintu.jpg" alt="box 2">
+                    </a>
+                    <h2>DOOR ACCESS</h2>
+                    <p style="font-size: 0.9em; color: white;">Open the door via advanced facial recognition to access classes on the door access feature</p>
                 </div>
-                
             </div>
-            <!-- Tambahkan konten lain di sini -->
+            <div class="lock">
+                <div class="content">
+                    <a href="">
+                    <img src="/static/css/lock.jpg" alt="box 3">
+                    </a>
+                    <h2>LOCK UNLOCK</h2>
+                    <p style="font-size: 0.9em; color: white;">Lock or open the door automatically with the lock unlock feature on the smart door lock</p>
+                  
+                </div>
+            </div>
         </div>
-    </div>
-    <footer style="background-color: #070708; color: white; text-align: center; padding: 10px; position: fix; bottom: 0; width: 100%;">
-        <p>&copy; 2023 Project Kelompok 4 TMJ 3B</p>
-    </footer>
+    </main>
+    <h1 style="text-align: center; color: white; margin-up: 30px;">Access Login</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Log Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in access_logs %}
+                <tr>
+                    <td>{{ log[0] }}</td>
+                    <td>{{ log[1] }}</td>
+                    <td>{{ log[2] }}</td>
+                    <td>{{ log[3] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+    <footer>
+        <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
+    </footer>  
 </body>
 </html>

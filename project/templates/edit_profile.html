@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil</title>
+    <link rel="stylesheet" type="text/css" href="static/css/styleedit_profile.css">
+    <!-- ... (file css lainnya) ... -->
+</head>
+<body>
+    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #000000; padding: 20px;">
+        <div class="left" style="display: flex; align-items: center;">
+            <img src="/static/css/Logo.png" 
+            alt="Logo" style="height: 60px; width: 60px; margin-right: 10px;">
+            <div>
+                <h2 style="margin: 0; color: white;">Smart Door Lock Embedded Room</h2>
+                <p style="margin: 0; color: white;">Door Lock With Face Recognition</p>
+            </div>
+        </div>
+        <div class="right">
+            <!-- Tampilkan informasi profil -->
+            <div style="display: flex; align-items: center; margin-right: 10px; text decoration: none underline;">
+                <a href="{{ url_for('dashboard') }}" style="color: white;">Home | </a>
+                <a href="{{ url_for('logout') }}" style="color: white;">|  Log Out   </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Bagian Kiri - Profile Account -->
+        <div class="profile-container">
+            <h2>Profile Account</h2>
+            <!-- Tampilkan foto profil dari database -->
+            <img src="{{ url_for('uploaded_file', filename=user_data[6]) }}" style="height: 170px; width: 170px; border-radius: 50%; margin-right: 0px;">
+    <!-- Tampilkan informasi profil dari database -->
+            <p><strong>Nama:</strong> {{ user_data[0] }}</p>
+            <p><strong>Status:</strong> {{ user_data[1] }}</p>
+            <p><strong>NIM/NIP:</strong> {{ user_data[2] }}</p>
+            <p><strong>Username:</strong> {{ user_data[3] }}</p>
+        </div>
+
+        <!-- Bagian Kanan - Edited Profile Account -->
+        <div class="edit-container">
+            <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+                <h1>Edited Profile Account</h1>
+                
+                <label for="new_nama">Name:</label>
+                <input type="text" name="nama" required placeholder="Enter Your Full Name" value="{{ user_data[0] }}">
+
+                <label for="new_status">Status:</label>
+                <input type="text" name="status" required placeholder="Enter Your Status" value="{{ user_data[1] }}">
+
+                <label for="new_nim_nip">NIM/NIP:</label>
+                <input type="text" name="nim_nip" required placeholder="Enter Your NIM/NIP" value="{{ user_data[2] }}">
+    
+                <label for="new_username">Username:</label>
+                <input type="text" name="username" required placeholder="Enter Your Username for Login" value="{{ user_data[3] }}">
+
+                <label for="old_password">Old Password:</label>
+                <input type="password" name="old_password" required placeholder="Enter Your Old Password">
+                    {% with messages = get_flashed_messages(category_filter='old_password') %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                
+                <label for="new_password">Password:</label>
+                <input type="password" name="password" required placeholder="Enter Your New Password">
+        
+                <label for="new_profile_picture">Foto Profil Baru:</label>
+                <input type="file" name="profile_picture">
+                    {% with messages = get_flashed_messages(category_filter='profile_picture') %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                
+                <input type="submit" value="SAVE">
+            </form>
+        </div>
+    </div>
+
+    <!-- ... (kode lainnya) ... -->
+
+    <footer>
+        <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
+    </footer>
+</body>
+</html>
