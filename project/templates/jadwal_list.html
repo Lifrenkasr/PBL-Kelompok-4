@@ -42,7 +42,7 @@
         Your browser does not support the video tag.
     </video>
     <div class="container">
-        <h2 style="text-align: center; color: #fff;">Admin Room schedule</h2>
+        <h2 style="text-align: center; color: #fff;">Edited Room schedule</h2>
         <table border="1">
             <thead>
                 <tr>
@@ -59,7 +59,8 @@
                         <td>{{ jadwal.time }}</td>
                         <td>{{ jadwal.class_name }}</td>
                         <td>
-                            <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}">Edit</a> <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}">Clear</a>
+                            <a href="{{ url_for('edit_jadwal', jadwal_id=jadwal.id) }}" class="edit">Edit</a> 
+                            <a href="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}" class="delete">Clear</a>
                         </td>
                     </tr>
                 {% endfor %}
