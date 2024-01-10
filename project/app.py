@@ -1,73 +1,74 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_mysqldb import MySQL
 from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
-from datetime import datetime
-import base64
+from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
+from flask import abort
 import os
 
 app = Flask(__name__)
+app.secret_key = 'pbl.kel4'
 
-# Konfigurasi MySQL
-app.config['MYSQL_HOST'] = 'localhost'  # Ganti sesuai host MySQL Anda
-app.config['MYSQL_USER'] = 'root'  # Ganti dengan username MySQL Anda
-app.config['MYSQL_PASSWORD'] = ''  # Ganti dengan password MySQL Anda
-app.config['MYSQL_DB'] = 'akun_registrasi'  # Ganti dengan nama database MySQL Anda
+# Initialize Bcrypt
+bcrypt = Bcrypt(app)
 
-# Inisialisasi ekstensi MySQL
-mysql = MySQL(app)
+# Configure MySQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/project_pbl'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 UPLOAD_FOLDER = 'static/profile_pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-class Jadwal:
-    def __init__(self, id, day, time, class_name):
-        self.id = id
-        self.day = day
-        self.time = time
-        self.class_name = class_name
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(255), nullable=False)
+    nim_nip = db.Column(db.String(255), nullable=False, unique=True)
+    username = db.Column(db.String(255), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False)
+    profile_picture = db.Column(db.String(255), nullable=False, default='default_profile.png')
 
-# Rute untuk halamam login
+class AccessLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    log_time = db.Column(db.DateTime, nullable=False)
+    action = db.Column(db.String(255), nullable=False)
+
+class Jadwal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day = db.Column(db.String(255), nullable=False)
+    time = db.Column(db.String(255), nullable=False)
+    class_name = db.Column(db.String(255), nullable=False)
+    
+# Login route
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if 'register' in request.form:
-            return redirect(url_for('register'))
         username = request.form["username"]
         password = request.form["password"]
 
-        # Periksa autentikasi pengguna
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
-        user = cur.fetchone()
-        cur.close()
+        user = User.query.filter_by(username=username).first()
 
-        if user:
-            # Catat log access ke database
-            log_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if user and bcrypt.check_password_hash(user.password, password):
+            session['username'] = user.username
+            log_time = datetime.now()
             action = "Login"
-            cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO access_log (username, log_time, action) VALUES (%s, %s, %s)", (username, log_time, action))
-            mysql.connection.commit()
-            cur.close()
-
-            session['username'] = user[3]
+            access_log = AccessLog(username=username, log_time=log_time, action=action)
+            db.session.add(access_log)
+            db.session.commit()
             return redirect(url_for('dashboard'))
         else:
-            flash(f'Login gagal. Cek kembali username dan password.')
-
+            flash(f'Login failed. Check your username and password.')
     return render_template('log.html')
 
-
-# Rute untuk halaman registrasi
+# Registration route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Ambil data dari formulir registrasi
-        
         nama = request.form['nama']
         status = request.form['status']
         nim_nip = request.form['nim_nip']
@@ -76,19 +77,16 @@ def register():
         konfirmasi_password = request.form['konfirmasi_password']
         profile_picture = request.form['profile_picture']
 
-        # Periksa apakah password sesuai
         if password == konfirmasi_password:
-            # Koneksi ke MySQL
-            cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO users (nama, status, nim_nip, username, password, profile_picture) VALUES (%s, %s, %s, %s, %s, %s)",
-            (nama, status, nim_nip, username, password, profile_picture))
-            mysql.connection.commit()
-            cur.close()
-            
-            flash('Registrasi berhasil. Silakan login.')
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            new_user = User(nama=nama, status=status, nim_nip=nim_nip, username=username, password=hashed_password, profile_picture=profile_picture)
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash('Registration successful. Please login.')
             return redirect(url_for('login'))
         else:
-            flash('Password tidak sesuai.')
+            flash('Passwords do not match.')
 
     return render_template('registrasi.html')
 
@@ -96,136 +94,120 @@ def register():
 @app.route('/dashboard')
 def dashboard():
     if 'username' in session:
-        # Koneksi ke database
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
-        user_data = cur.fetchone()
-        cur.close()
+        user = User.query.filter_by(username=session['username']).first()
 
-        profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
-        
-    if 'username' in session:
-            # Koneksi ke database
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM access_log ORDER BY log_time DESC LIMIT 1000")  # Ambil 10 log terakhir
-        access_logs = cur.fetchall()
-        cur.close()
+        if user:
+            profile_picture = user.profile_picture or 'default_profile.png'
 
-        return render_template('dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
-    else:
-        return redirect(url_for('login'))
+            access_logs = AccessLog.query.order_by(AccessLog.log_time.desc()).limit(1000).all()
+            print(access_logs)  # Cek apakah data berhasil diambil
+
+            return render_template('dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
+    
+    return redirect(url_for('login'))
     
 # Rute untuk menampilkan daftar jadwal
 @app.route('/jadwal', methods=['GET'])
 def jadwal_list():
-            if 'username' in session:
-                    # Koneksi ke database
-                cur = mysql.connection.cursor()
-                cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
-                user_data = cur.fetchone()
-                cur.close()
+    if 'username' in session:
+        user = User.query.filter_by(username=session['username']).first()
 
-                profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+        if user:
+            profile_picture = user.profile_picture or 'default_profile.png'
 
-                
-                cur = mysql.connection.cursor()
-                cur.execute("SELECT id, day, time, class FROM jadwal")
-                jadwal_list = [Jadwal(id=row[0], day=row[1], time=row[2], class_name=row[3]) for row in cur.fetchall()]
-                cur.close()
-                
-                return render_template('jadwal_list.html', jadwal_list=jadwal_list, profile_picture=profile_picture)
-            else: 
-                return redirect(url_for('login'))
+            jadwal_list = Jadwal.query.all()
 
-
+            return render_template('jadwal_list.html', jadwal_list=jadwal_list, profile_picture=profile_picture)
+        else:
+            return redirect(url_for('login'))
+    
 @app.route('/jadwal/add', methods=['GET', 'POST'])
 def add_jadwal():
-            if 'username' in session:
-                    # Koneksi ke database
-                cur = mysql.connection.cursor()
-                cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
-                user_data = cur.fetchone()
-                cur.close()
+    if 'username' in session:
+        user = User.query.filter_by(username=session['username']).first()
 
-                profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+        if user:
+            profile_picture = user.profile_picture or 'default_profile.png'
 
-               
-                if request.method == 'POST':
-                    day = request.form['day']
-                    time = request.form['time']
-                    class_name = request.form['class']
+            if request.method == 'POST':
+                day = request.form['day']
+                time = request.form['time']
+                class_name = request.form['class']
 
-                    cur = mysql.connection.cursor()
-                    cur.execute("INSERT INTO jadwal (day, time, class) VALUES (%s, %s, %s)", (day, time, class_name))
-                    mysql.connection.commit()
-                    cur.close()
-                    flash('Jadwal berhasil ditambahkan.')
-                    return redirect(url_for('jadwal_list'))
+                new_jadwal = Jadwal(day=day, time=time, class_name=class_name)
+                db.session.add(new_jadwal)
+                db.session.commit()
 
-                return render_template('add_jadwal.html',add_jadwal=add_jadwal, profile_picture=profile_picture)
-            else: 
-                return redirect(url_for('login'))
+                flash('Jadwal berhasil ditambahkan.')
+                return redirect(url_for('jadwal_list'))
+
+            return render_template('add_jadwal.html', add_jadwal=add_jadwal, profile_picture=profile_picture)
+        else:
+            return redirect(url_for('login'))
 
 
 @app.route('/jadwal/edit/<int:jadwal_id>', methods=['GET', 'POST'])
 def edit_jadwal(jadwal_id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM jadwal WHERE id = %s", (jadwal_id,))
-    jadwal_data = cur.fetchone()
-    cur.close()
+    user = User.query.filter_by(username=session['username']).first()
 
-    if jadwal_data:
-        jadwal = Jadwal(id=jadwal_data[0], day=jadwal_data[1], time=jadwal_data[2], class_name=jadwal_data[3])
+    if user:
+        profile_picture = user.profile_picture or 'default_profile.png'
 
-        if request.method == 'POST':
-            day = request.form['day']
-            time = request.form['time']
-            class_name = request.form['class']
+        jadwal = Jadwal.query.get(jadwal_id)
 
-            cur = mysql.connection.cursor()
-            cur.execute("UPDATE jadwal SET day = %s, time = %s, class = %s WHERE id = %s",
-                        (day, time, class_name, jadwal_id))
-            mysql.connection.commit()
-            cur.close()
-            flash('Jadwal berhasil diubah.')
+        if jadwal:
+            if request.method == 'POST':
+                day = request.form['day']
+                time = request.form['time']
+                class_name = request.form['class']
+
+                jadwal.day = day
+                jadwal.time = time
+                jadwal.class_name = class_name
+
+                db.session.commit()
+
+                flash('Jadwal berhasil diubah.')
+                return redirect(url_for('jadwal_list'))
+
+            return render_template('edit_jadwal.html', jadwal=jadwal, profile_picture=profile_picture)
+        else:
+            flash('Jadwal tidak ditemukan.')
             return redirect(url_for('jadwal_list'))
-
-        return render_template('edit_jadwal.html', jadwal=jadwal)
-
     else:
-        flash('Jadwal tidak ditemukan.')
-        return redirect(url_for('jadwal_list'))
+        return redirect(url_for('login'))
 
 @app.route('/jadwal/delete/<int:jadwal_id>')
 def delete_jadwal(jadwal_id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM jadwal WHERE id = %s", (jadwal_id,))
-    mysql.connection.commit()
-    cur.close()
-    flash('Jadwal berhasil dihapus.')
-    return redirect(url_for('jadwal_list'))
+    user = User.query.filter_by(username=session['username']).first()
 
-# Rute untuk menampilkan view jadwal
-@app.route('/view_jadwal', methods=['GET'])
-def view_jadwal():
-    if 'username' in session:
-        # Koneksi ke database
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT profile_picture FROM users WHERE username = %s", (session['username'],))
-        user_data = cur.fetchone()
-        cur.close()
+    if user:
+        jadwal = Jadwal.query.get(jadwal_id)
 
-        profile_picture = user_data[0] if user_data and len(user_data) > 0 else 'default_profile.png'
+        if jadwal:
+            db.session.delete(jadwal)
+            db.session.commit()
 
-        # Ambil data jadwal dari database
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT day, time, class FROM jadwal")
-        jadwal_list = cur.fetchall()
-        cur.close()
-
-        return render_template('view_jadwal.html', jadwal_list=jadwal_list, profile_picture=profile_picture)
+            flash('Jadwal berhasil dihapus.')
+            return redirect(url_for('jadwal_list'))
+        else:
+            flash('Jadwal tidak ditemukan.')
+            return redirect(url_for('jadwal_list'))
     else:
         return redirect(url_for('login'))
+    
+@app.route('/view_jadwal', methods=['GET'])
+def view_jadwal():
+        user = User.query.filter_by(username=session['username']).first()
+
+        if user:
+            profile_picture = user.profile_picture or 'default_profile.png'
+
+            jadwal_list = Jadwal.query.all()
+
+            return render_template('view_jadwal.html', jadwal_list=jadwal_list, profile_picture=profile_picture)
+        else:
+            return redirect(url_for('login'))
     
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
@@ -235,52 +217,51 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
+# Edit Profile route
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
-    if 'username' not in session:
+    if 'username' in session:
+        user = User.query.filter_by(username=session['username']).first()
+
+        if user:
+            if request.method == 'POST':
+                old_password = request.form.get('old_password')
+
+                if old_password and not bcrypt.check_password_hash(user.password, old_password):
+                    flash('Old password is incorrect. Please try again.', 'old_password_error')
+                    return redirect(url_for('edit_profile'))
+
+                filename = user.profile_picture or 'default_profile.png'
+                if 'profile_picture' in request.files:
+                    file = request.files['profile_picture']
+                    if file and allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    else:
+                        flash('Invalid image file. Use formats: png, jpg, jpeg, or gif.')
+
+                user.nama = request.form['nama']
+                user.status = request.form['status']
+                user.nim_nip = request.form['nim_nip']
+
+                new_password = request.form.get('password')
+                if new_password:
+                    hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+                    user.password = hashed_password
+
+                user.profile_picture = filename
+                user.time = datetime.now()
+
+                db.session.commit()
+
+                flash('Profile updated successfully.')
+                return redirect(url_for('dashboard'))
+
+            return render_template('edit_profile.html', user_data=user, profile_picture=user.profile_picture or 'default_profile.png')
+        else:
+            return redirect(url_for('login'))
+    else:
         return redirect(url_for('login'))
-
-    # Ambil data pengguna dari database dan teruskan ke templat
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
-    user_data = cur.fetchone()
-    cur.close()
-
-    if request.method == 'POST':
-        # Ambil data dari formulir edit profil
-        nama = request.form['nama']
-        status = request.form['status']
-        nim_nip = request.form['nim_nip']
-        username = request.form['username']
-        old_password = request.form['old_password']  # Tambah input untuk password lama
-        new_password = request.form['password']
-        
-        # Verifikasi password lama sebelum mengubah
-        if old_password != user_data[4]:  # Jika password lama tidak sesuai dengan yang ada di database
-            flash('Password lama salah. Silakan coba lagi.')
-            return redirect(url_for('edit_profile'))
-
-        # Unggah gambar profil
-        filename = user_data[6]  # Mengasumsikan jalur gambar profil berada pada kolom ke-7
-        if 'profile_picture' in request.files:
-            file = request.files['profile_picture']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            else:
-                flash('File gambar tidak valid. Gunakan format: png, jpg, jpeg, atau gif.')
-
-        # Koneksi ke database
-        cur = mysql.connection.cursor()
-        cur.execute("UPDATE users SET nama = %s, status = %s, nim_nip = %s, password = %s, profile_picture = %s, time = %s WHERE username = %s",
-                    (nama, status, nim_nip, new_password, filename, datetime.now(), username))
-        mysql.connection.commit()
-        cur.close()
-        flash('Profil berhasil diubah.')
-        return redirect(url_for('dashboard'))
-
-    return render_template('edit_profile.html', user_data=user_data)
-
 
 # Rute untuk logout
 @app.route('/logout')
@@ -289,7 +270,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-
 if __name__ == '__main__':
-    app.secret_key = 'your_secret_key'
-app.run(debug=True, host="127.0.0.1", port=5000)
+    with app.app_context():
+        db.create_all()  # Buat tabel-tabel dalam database jika belum ada
+    app.run(debug=True, host="127.0.0.1", port=5000)

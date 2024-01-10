@@ -98,31 +98,32 @@
 
         </main>
 
-    <table border="1">
-        <caption style="caption-side: top; text-align: center; font-size: 24px; color: white; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
-            Access Login
-        </caption>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Log Time</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for log in access_logs %}
+        <table border="1">
+            <caption style="caption-side: top; text-align: center; font-size: 24px; color: white; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
+                Access Login
+            </caption>
+            <thead>
                 <tr>
-                    <td>{{ log[0] }}</td>
-                    <td>{{ log[1] }}</td>
-                    <td>{{ log[2] }}</td>
-                    <td>{{ log[3] }}</td>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Log Time</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for log in access_logs %}
+                    <tr>
+                        <td>{{ log.id }}</td>
+                        <td>{{ log.username }}</td>
+                        <td>{{ log.log_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ log.action }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 </body>
 </html>
+
     <footer>
         <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
     </footer>  

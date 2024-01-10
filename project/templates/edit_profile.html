@@ -36,47 +36,52 @@
         <div class="profile-container">
             <h2 style="text-align: center;">Profile Account</h2>
             <!-- Tampilkan foto profil dari database -->
-            <img src="{{ url_for('uploaded_file', filename=user_data[6]) }} " style="display: block; margin: 0 auto;" >
-    <!-- Tampilkan informasi profil dari database -->
-            <p><strong>Nama    :</strong> {{ user_data[0] }}</p>
-            <p><strong>Status  :</strong> {{ user_data[1] }}</p>
-            <p><strong>NIM/NIP :</strong> {{ user_data[2] }}</p>
-            <p><strong>Username:</strong> {{ user_data[3] }}</p>
+            <img src="{{ url_for('uploaded_file', filename=user_data.profile_picture) }}" style="display: block; margin: 0 auto;">
+        <!-- Tampilkan informasi profil dari database -->
+            <p><strong>Nama    :</strong> {{ user_data.nama }}</p>
+            <p><strong>Status  :</strong> {{ user_data.status }}</p>
+            <p><strong>NIM/NIP :</strong> {{ user_data.nim_nip }}</p>
+            <p><strong>Username:</strong> {{ user_data.username }}</p>
         </div>
 
-        <!-- Bagian Kanan - Edited Profile Account -->
-        <div class="edit-container">
-            <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+       <!-- Bagian Kanan - Edited Profile Account -->
+<div class="edit-container">
+    <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
                 <h1 style="text-align: center;">Edited Profile Account</h1>
-                
+
                 <label for="new_nama"><strong>Name:</strong></label>
-                <input type="text" name="nama" required placeholder="Enter Your Full Name" value="{{ user_data[0] }}">
+                <input type="text" name="nama" required placeholder="Enter Your Full Name" value="{{ user_data.nama }}">
 
                 <label for="new_status"><strong>Status:</strong></label>
-                <input type="text" name="status" required placeholder="Enter Your Status" value="{{ user_data[1] }}">
+                <input type="text" name="status" required placeholder="Enter Your Status" value="{{ user_data.status }}">
 
                 <label for="new_nim_nip"><strong>NIM/NIP:</strong></label>
-                <input type="text" name="nim_nip" required placeholder="Enter Your NIM/NIP" value="{{ user_data[2] }}">
-    
-                <label for="new_username"><strong>Username:</strong></label>
-                <input type="text" name="username" required placeholder="Enter Your Username for Login" value="{{ user_data[3] }}">
+                <input type="text" name="nim_nip" required placeholder="Enter Your NIM/NIP" value="{{ user_data.nim_nip }}">
 
-                <label for="old_password"><strong>Old Password:</strong></label>
-                <input type="password" name="old_password" required placeholder="Enter Your Old Password">
-                    {% with messages = get_flashed_messages(category_filter='old_password') %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert alert-danger">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+               <!-- Display current username (non-editable) -->
+                <label for="new_username"><strong>Username:</strong></label>
+                <input type="text" value="{{ user_data[3] }}" readonly>
                 
+                <!-- Include a hidden input field for the form to submit the username -->
+                <input type="hidden" name="username" value="{{ user_data[3] }}">
+                
+                <label for="old_password"><strong>Old Password:</strong></label>
+        <input type="password" name="old_password" required placeholder="Enter Your Old Password">
+        
+        <!-- Display notification if old password is incorrect -->
+        {% with messages = get_flashed_messages(category_filter='old_password_error') %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
                 <label for="new_password"><strong>Password:</strong></label>
                 <input type="password" name="password" required placeholder="Enter Your New Password">
         
-                <label for="new_profile_picture"><strong>Foto Profil Baru:</strong></label>
+                <label for="new_profile_picture"><strong>New Profile Picture:</strong></label>
                 <input type="file" name="profile_picture">
                     {% with messages = get_flashed_messages(category_filter='profile_picture') %}
                         {% if messages %}
