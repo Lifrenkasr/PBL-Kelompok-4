@@ -4,11 +4,12 @@ from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import sessionmaker
 from flask import abort
 import os
 
 app = Flask(__name__)
-app.secret_key = 'pbl.kel4'
+app.config['SECRET_KEY'] = os.urandom(24)
 
 # Initialize Bcrypt
 bcrypt = Bcrypt(app)
@@ -31,6 +32,7 @@ class User(db.Model):
     username = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     profile_picture = db.Column(db.String(255), nullable=False, default='default_profile.png')
+    role = db.Column(db.String(255), nullable=False, default='user')  # 'user' atau 'admin'
 
 class AccessLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,6 +57,7 @@ def login():
 
         if user and bcrypt.check_password_hash(user.password, password):
             session['username'] = user.username
+            session['role'] = user.role  # Tetapkan peran dalam sesi
             log_time = datetime.now()
             action = "Login"
             access_log = AccessLog(username=username, log_time=log_time, action=action)
@@ -90,7 +93,7 @@ def register():
 
     return render_template('registrasi.html')
 
-#rute untuk halaman Dashboard
+# Rute Dashboard
 @app.route('/dashboard')
 def dashboard():
     if 'username' in session:
@@ -98,14 +101,20 @@ def dashboard():
 
         if user:
             profile_picture = user.profile_picture or 'default_profile.png'
+            role = session.get('role', 'user')  # Tetapkan 'user' secara default jika peran tidak diatur
 
             access_logs = AccessLog.query.order_by(AccessLog.log_time.desc()).limit(1000).all()
             print(access_logs)  # Cek apakah data berhasil diambil
 
-            return render_template('dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
+            if role == 'user':
+                # Pengguna hanya dapat mengakses view room schedule dan door access
+                return render_template('user_dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
+            elif role == 'admin':
+                # Admin dapat mengakses fitur lebih banyak
+                return render_template('Dashboard.html', access_logs=access_logs, profile_picture=profile_picture)
     
     return redirect(url_for('login'))
-    
+
 # Rute untuk menampilkan daftar jadwal
 @app.route('/jadwal', methods=['GET'])
 def jadwal_list():
@@ -267,8 +276,8 @@ def edit_profile():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('role', None)  # Hapus informasi peran dari sesi
     return redirect(url_for('login'))
-
 
 if __name__ == '__main__':
     with app.app_context():

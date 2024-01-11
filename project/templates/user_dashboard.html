@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="static/css/styledashboard.css">
+    
+        <script>
+            function redirectToEditProfile() {
+                window.location.href = "{{ url_for('edit_profile') }}";
+            }
+        </script>
+        <script>
+            document.getElementById("logout-button").onclick = function() {
+                window.location.href = "{{ url_for('login') }}";
+            };
+        </script>
+        
+    </head>
+<body>
+    <video class="video-bg" autoplay muted loop>
+        <source src="/static/css/bg3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
+        <div class="left" style="display: flex; align-items: center;">
+            <img src="/static/css/Logo.png" alt="Logo" style="height: 60px; width: 60px; margin-right: 10px;">
+            <div>
+                <h2 style="margin: 0; color: white;">Smart Door Lock Embedded Room</h2>
+                <p style="margin: 0; color: white;">Door Lock With Face Recognition</p>
+            </div>
+        </div>
+        <div class="right" style="display: flex; align-items: center;">
+            <!-- Tampilkan informasi profil -->
+            <a href="{{ url_for('login') }}" class="logout-button">Log Out</a>
+
+            
+            <div style="display: flex; align-items: center; margin-right: 10px;">
+                <img src="{{ url_for('uploaded_file', filename=profile_picture) }}" style="height: 50px; width: 50px; border-radius: 50%; margin-right: -5px;"
+                    onclick="redirectToEditProfile()">
+            
+            </div>
+        </div>
+    </header>
+    <!-- Header section -->
+    <h1 style="text-align: center; color: white; margin-bottom: 20px; padding: 35px">
+        Welcome To User Dashboard Smart Door Lock With Face Recognition</h1>
+
+    <!-- Main content container -->
+    <main>
+        <div class="top-content">
+            <div class="jadwal">
+                <div class="content">
+                    <a href="{{ url_for('view_jadwal') }}">
+                        <img src="/static/css/jadwal.jpg" alt="box 1">
+                    </a>
+                    <h2>VIEW ROOM SCHEDULE</h2>
+                    <p style="font-size: 0.9em; color: white;">Easily view the embedded room schedule before using the class in the room schedule feature</p>
+                </div>
+            </div>
+            
+            <div class="pintu">
+                <div class="content">
+                    <a href="http://192.168.134.127">
+                        <img src="/static/css/pintu.jpg" alt="box 2">
+                    </a>
+                    <h2>DOOR ACCESS</h2>
+                    <p style="font-size: 0.9em; color: white;">Open the door via advanced facial recognition to access classes on the door access feature</p>
+                </div>
+            </div>
+           
+            
+            
+        </div>
+        </main>
+</body>
+</html>
+
+    <footer>
+        <p>&copy; 2023 Kelompok 4 TMJ 3B</p>
+    </footer>  
+</body>
+</html> 
