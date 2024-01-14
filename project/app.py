@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 # Initialize Bcrypt
 bcrypt = Bcrypt(app)
 
-# Configure MySQL
+#Configure MySQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/project_pbl'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
