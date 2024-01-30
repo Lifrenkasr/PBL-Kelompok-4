@@ -1,0 +1,78 @@
+/* lockunlock.css */
+
+.video-bg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 0px;
+}
+
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.toggle-label {
+    font-size: 1.2em;
+    color: white;
+    margin-right: 10px;
+}
+
+.toggle-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 60px;
+    height: 34px;
+    background: #2196F3;
+    outline: none;
+    border-radius: 34px;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch:checked + .toggle-slider {
+    transform: translateX(26px);
+}
+
+.toggle-description {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: white;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    color: white;
+    padding: 15px 0; /* Mengubah padding atas dan bawah */
+    text-align: center;
+    font-size: 14px; /* Mengubah ukuran teks */
+    background-color: rgba(0, 0, 0, 0.7);
+}

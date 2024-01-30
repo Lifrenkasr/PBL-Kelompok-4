@@ -145,11 +145,11 @@ header {
     order: 2;
 }
 
-.lock {
+.edit-jadwal {
     order: 3;
 }
 
-.edit-jadwal{
+.lock{
     order: 4;
 }
 

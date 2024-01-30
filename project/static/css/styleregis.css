@@ -1,3 +1,18 @@
+/* Tambahkan gaya spesifik untuk setiap kategori jika diperlukan */
+.alert-success {
+  background-color: #28a745; /* Atur warna latar belakang untuk pesan sukses */
+}
+
+.alert-danger {
+  background-color: #dc3545; /* Atur warna latar belakang untuk pesan bahaya */
+}
+
+/* Tambahkan gaya untuk tombol penutup jika diperlukan */
+.close {
+  color: white;
+  opacity: 0.8;
+}
+
 /* Reset default browser styles */
 * {
   margin: 0;

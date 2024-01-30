@@ -66,18 +66,18 @@
                 <input type="hidden" name="username" value="{{ user_data[3] }}">
                 
                 <label for="old_password"><strong>Old Password:</strong></label>
-        <input type="password" name="old_password" required placeholder="Enter Your Old Password">
-        
-        <!-- Display notification if old password is incorrect -->
-        {% with messages = get_flashed_messages(category_filter='old_password_error') %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+                <input type="password" name="old_password" required placeholder="Enter Your Old Password">
+
+                <!-- Display notification if old password is incorrect -->
+                {% with messages = get_flashed_messages(category_filter='old_password_error') %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" style="background-color: white; color: red;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <label for="new_password"><strong>Password:</strong></label>
                 <input type="password" name="password" required placeholder="Enter Your New Password">
         

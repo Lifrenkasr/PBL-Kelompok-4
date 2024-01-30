@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, jsonify, render_template, request, redirect, url_for, flash, session
 from datetime import datetime
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import sessionmaker
+from flask import flash
 from flask import abort
 import os
+# import requests  # Import library untuk berkomunikasi dengan ESP32
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = os.urandom(24)
 
 # Initialize Bcrypt
@@ -79,6 +81,12 @@ def register():
         password = request.form['password']
         konfirmasi_password = request.form['konfirmasi_password']
         profile_picture = request.form['profile_picture']
+
+        # Check if the username already exists
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('Username already exists. Choose a different one.')
+            return redirect(url_for('register'))
 
         if password == konfirmasi_password:
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -221,10 +229,10 @@ def view_jadwal():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
 
+# Rute untuk menyajikan file gambar profil
 @app.route('/profile_picture/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
 
 # Edit Profile route
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -240,12 +248,25 @@ def edit_profile():
                     flash('Old password is incorrect. Please try again.', 'old_password_error')
                     return redirect(url_for('edit_profile'))
 
-                filename = user.profile_picture or 'default_profile.png'
+                # Hapus foto profil lama jika ada
+                if user.profile_picture and user.profile_picture != 'default_profile.png':
+                    old_profile_path = os.path.join(app.config['UPLOAD_FOLDER'], user.profile_picture)
+                    if os.path.exists(old_profile_path):
+                        os.remove(old_profile_path)
+
+                # Pengaturan foto profil baru
                 if 'profile_picture' in request.files:
                     file = request.files['profile_picture']
                     if file and allowed_file(file.filename):
                         filename = secure_filename(file.filename)
-                        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                        # Ensure the target directory exists
+                        target_folder = os.path.join(app.config['UPLOAD_FOLDER'])
+                        os.makedirs(target_folder, exist_ok=True)
+
+                        full_path = os.path.join(target_folder, filename)
+                        file.save(full_path)
+                        user.profile_picture = filename
                     else:
                         flash('Invalid image file. Use formats: png, jpg, jpeg, or gif.')
 
@@ -258,7 +279,6 @@ def edit_profile():
                     hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
                     user.password = hashed_password
 
-                user.profile_picture = filename
                 user.time = datetime.now()
 
                 db.session.commit()

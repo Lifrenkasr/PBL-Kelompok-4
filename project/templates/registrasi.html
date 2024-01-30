@@ -45,6 +45,18 @@
               <label for="new_profile_picture">Profile Picture</label>
               <input class="form-control" type="file" name="profile_picture" id="profile_picture" required />
             </div>
+             <!-- Menambahkan blok untuk pesan flash di bawah tulisan Login -->
+             {% with messages = get_flashed_messages(with_categories=true) %}
+             {% if messages %}
+             <div class="flash-messages">
+                 {% for category, message in messages %}
+                 <div class="alert alert-{{ category }}" role="alert" style="color: white;">
+                     {{ message }}
+                 </div>
+                 {% endfor %}
+             </div>
+             {% endif %}
+             {% endwith %}
             <li>
               <input class="btn btn--form" type="submit" value="Register" />
             </li>

@@ -17,17 +17,6 @@
         <form action="/" method="POST">
             <h1>Login</h1>
 
-            <!-- Menambahkan blok untuk pesan flash -->
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="flash-messages">
-                        {% for message in messages %}
-                            <p>{{ message }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-
             <div class="inputbox">
                 <ion-icon name="mail-outline"></ion-icon>
                 <input type="username" name="username" required>
@@ -38,14 +27,28 @@
                 <input type="password" name="password" required>
                 <label for="">Password</label>
             </div>
+
+            <!-- Menambahkan blok untuk pesan flash di bawah tulisan Login -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert" style="color: white;">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
             <div class="forget">
                 <label for=""><input type="checkbox">Remember Me</label>
-              
             </div>
             <button type="submit" name="login">Log in</button>
             <div class="register">
-                <p>Don't have a account <a href="/register">Register</a></p>
+                <p>Don't have an account? <a href="/register">Register</a></p>
             </div>
         </form>
     </section>
 </body>
+</html>
